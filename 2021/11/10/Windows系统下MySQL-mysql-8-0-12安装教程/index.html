@@ -508,7 +508,9 @@
 <li><p>执行完成后，会打印 root 用户的初始默认密码，比如：</p>
 </li>
 </ul>
+<blockquote>
 <p><img src="849139-20180821091007236-1831078865.png"></p>
+</blockquote>
 <p><font color="red"><em><strong>注意！</strong></em></font>执行输出结果里面有一段： [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: rI5rvf5x5G,E</p>
 <blockquote>
 <p>其中root@localhost:后面的“rI5rvf5x5G,E”就是初始密码（不含首位空格）。在没有更改密码前，需要记住这个密码，后续登录需要用到。没记住，那也没事，删掉初始化的 datadir 目录，再执行一遍初始化命令，又会重新生成的。当然，也可以使用安全工具，强制改密码，用什么方法，自己随意。参考：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/data-directory-initialization-mysqld.html">https://dev.mysql.com/doc/refman/8.0/en/data-directory-initialization-mysqld.html</a></p>
