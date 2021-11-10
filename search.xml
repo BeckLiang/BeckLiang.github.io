@@ -4,17 +4,25 @@
   
     
     <entry>
-      <title>测试图片</title>
-      <link href="/2021/11/08/%E6%B5%8B%E8%AF%95%E5%9B%BE%E7%89%87/"/>
-      <url>/2021/11/08/%E6%B5%8B%E8%AF%95%E5%9B%BE%E7%89%87/</url>
+      <title>Windows系统下MySQL-mysql 8.0.12安装教程</title>
+      <link href="/2021/11/10/Windows%E7%B3%BB%E7%BB%9F%E4%B8%8BMySQL-mysql-8-0-12%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
+      <url>/2021/11/10/Windows%E7%B3%BB%E7%BB%9F%E4%B8%8BMySQL-mysql-8-0-12%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
       
-        <content type="html"><![CDATA[<p><img src="01.jpg" alt="01"></p>]]></content>
+        <content type="html"><![CDATA[<h3 id="1-下载zip安装包"><a href="#1-下载zip安装包" class="headerlink" title="1. 下载zip安装包"></a>1. 下载zip安装包</h3><p>&emsp;   MySQL8.0 For Windows zip包下载地址：<a href="https://dev.mysql.com/downloads/file/?id=479669">https://dev.mysql.com/downloads/file/?id=479669</a>，进入页面后可以不登录。点击底部“No thanks, just start my download.”即可开始下载。</p><h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h3><h4 id="2-1-解压zip包到安装目录"><a href="#2-1-解压zip包到安装目录" class="headerlink" title="2.1 解压zip包到安装目录"></a>2.1 解压zip包到安装目录</h4><ul><li><p>解压文件到D:\DeveloperTools\MySql\mysql-8.0.12-winx64</p></li><li><p>解压后的文件目录：</p></li></ul><blockquote><p><img src="849139-20180821085059628-1055555448.png"></p></blockquote><h4 id="2-2-配置环境变量"><a href="#2-2-配置环境变量" class="headerlink" title="2.2 配置环境变量"></a>2.2 配置环境变量</h4><ul><li>进入环境设置</li></ul><blockquote><p><img src="20211110104628.png"></p></blockquote><ul><li>设置环境变量</li></ul><blockquote><p><img src="20211110110846.png"></p></blockquote><h4 id="2-3-配置初始化的my-ini文件"><a href="#2-3-配置初始化的my-ini文件" class="headerlink" title="2.3 配置初始化的my.ini文件"></a>2.3 配置初始化的my.ini文件</h4><ul><li>解压后的目录并没有my.ini文件，没关系可以自行创建。在安装根目录下添加 my.ini（新建文本文件，将文件类型改为.ini）</li></ul><blockquote><p><img src="849139-20180821090355262-230864047.png"></p></blockquote><ul><li>写入基本配置：</li></ul><pre class=" language-ini"><code class="language-ini"><span class="token selector">[mysqld]</span># 设置3306端口<span class="token constant">port</span><span class="token attr-value"><span class="token punctuation">=</span>3306</span># 设置mysql的安装目录<span class="token constant">basedir</span><span class="token attr-value"><span class="token punctuation">=</span>D:\\DeveloperTools\\MySql\\mysql-8.0.12-winx64   # 切记此处一定要用双斜杠\\，单斜杠我这里会出错，不过看别人的教程，有的是单斜杠。自己尝试吧</span># 设置mysql数据库的数据的存放目录<span class="token constant">datadir</span><span class="token attr-value"><span class="token punctuation">=</span>D:\\DeveloperTools\\MySql\\mysql-8.0.12-winx64\\data   # 此处同上</span># 允许最大连接数<span class="token constant">max_connections</span><span class="token attr-value"><span class="token punctuation">=</span>200</span># 允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统<span class="token constant">max_connect_errors</span><span class="token attr-value"><span class="token punctuation">=</span>10</span># 服务端使用的字符集默认为UTF8<span class="token constant">character-set-server</span><span class="token attr-value"><span class="token punctuation">=</span>utf8</span># 创建新表时将使用的默认存储引擎<span class="token constant">default-storage-engine</span><span class="token attr-value"><span class="token punctuation">=</span>INNODB</span># 默认使用“mysql_native_password”插件认证<span class="token constant">default_authentication_plugin</span><span class="token attr-value"><span class="token punctuation">=</span>mysql_native_password</span><span class="token selector">[mysql]</span># 设置mysql客户端默认字符集<span class="token constant">default-character-set</span><span class="token attr-value"><span class="token punctuation">=</span>utf8</span><span class="token selector">[client]</span># 设置mysql客户端连接服务端时默认使用的端口<span class="token constant">port</span><span class="token attr-value"><span class="token punctuation">=</span>3306</span><span class="token constant">default-character-set</span><span class="token attr-value"><span class="token punctuation">=</span>utf8</span></code></pre><ul><li><font color="red"><em><strong>注意：</strong></em></font>其中的data目录不需要创建，下一步初始化工作中会自动创建。</li></ul><h3 id="3、安装mysql"><a href="#3、安装mysql" class="headerlink" title="3、安装mysql"></a>3、安装mysql</h3><p><font color="red"><em><strong>注意：</strong></em></font> 在安装时，必须以管理员身份运行cmd，否则在安装时会报错，会导致安装失败的情况。</p><blockquote><p><img src="849139-20180821090608132-473009834.png"></p></blockquote><h4 id="3-1-初始化数据库"><a href="#3-1-初始化数据库" class="headerlink" title="3.1 初始化数据库"></a>3.1 初始化数据库</h4><ul><li><p>在MySQL安装目录的 bin 目录下执行命令：</p><pre class=" language-mysql"><code class="language-mysql">mysqld --initialize --console</code></pre></li><li><p>执行完成后，会打印 root 用户的初始默认密码，比如：</p></li></ul><p><img src="849139-20180821091007236-1831078865.png"></p><p><font color="red"><em><strong>注意！</strong></em></font>执行输出结果里面有一段： [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: rI5rvf5x5G,E</p><blockquote><p>其中root@localhost:后面的“rI5rvf5x5G,E”就是初始密码（不含首位空格）。在没有更改密码前，需要记住这个密码，后续登录需要用到。没记住，那也没事，删掉初始化的 datadir 目录，再执行一遍初始化命令，又会重新生成的。当然，也可以使用安全工具，强制改密码，用什么方法，自己随意。参考：<a href="https://dev.mysql.com/doc/refman/8.0/en/data-directory-initialization-mysqld.html">https://dev.mysql.com/doc/refman/8.0/en/data-directory-initialization-mysqld.html</a></p></blockquote><h4 id="3-2-安装服务"><a href="#3-2-安装服务" class="headerlink" title="3.2 安装服务"></a>3.2 安装服务</h4><ul><li><p>在MySQL安装目录的 bin 目录下执行命令：</p><pre class=" language-mysql"><code class="language-mysql">mysqld --install [服务名]</code></pre></li><li><p>后面的服务名可以不写，默认的名字为 mysql。当然，如果你的电脑上需要安装多个MySQL服务，就可以用不同的名字区分了，比如 mysql5 和 mysql8</p></li><li><p>安装完成之后，就可以通过命令net start mysql启动MySQL的服务了。通过命令net stop mysql停止服务。</p></li></ul><h3 id="4、更改密码"><a href="#4、更改密码" class="headerlink" title="4、更改密码"></a>4、更改密码</h3><ul><li><p>在MySQL安装目录的 bin 目录下执行命令：</p><pre class=" language-mysql"><code class="language-mysql">mysql -u root -p</code></pre></li><li><p>这时候会提示输入密码，记住了上面第3.1步安装时的密码，填入即可登录成功，进入MySQL命令模式。</p></li></ul><blockquote><p><img src="20211110172054.png"></p></blockquote><ul><li><p>在MySQL中执行命令：</p><pre class=" language-mysql"><code class="language-mysql">ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';</code></pre></li><li><p>修改密码，注意命令尾的；一定要有，这是mysql的语法。</p></li></ul>]]></content>
       
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
       
       
         <tags>
             
-            <tag> centos </tag>
+            <tag> mysql </tag>
+            
+            <tag> windows </tag>
             
         </tags>
       
@@ -23,11 +31,36 @@
     
     
     <entry>
-      <title>Hello World</title>
+      <title>Markdown使用示例</title>
+      <link href="/2021/11/10/Markdown%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/"/>
+      <url>/2021/11/10/Markdown%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><p>博客第一章段落</p><p><em>斜体文本</em></p><p><em>斜体文本</em></p><p><strong>粗体文本</strong></p><p><strong>粗体文本</strong></p><p><em><strong>粗斜体文本</strong></em></p><p><em><strong>粗斜体文本</strong></em></p><hr><hr><hr><hr><p><del>删除线</del></p><p><u>下划线</u></p><p>创建脚注格式类似这样<a href="%E5%AD%A6%E7%9A%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%8A%80%E6%9C%AF%EF%BC%8C%E6%9B%B4%E6%98%AF%E6%A2%A6%E6%83%B3">^RUNOOB</a></p><h2 id="Markdown列表"><a href="#Markdown列表" class="headerlink" title="Markdown列表"></a>Markdown列表</h2><ul><li><p>第一项</p></li><li><p>第二项</p></li><li><p>第三项  </p></li></ul><ul><li><p>第一项</p></li><li><p>第二项</p></li><li><p>第三项</p></li></ul><ul><li><p>第一项</p></li><li><p>第二项</p></li></ul><ol><li>第一项</li><li>第二项</li><li>第三项</li></ol><h2 id="列表嵌套"><a href="#列表嵌套" class="headerlink" title="列表嵌套"></a>列表嵌套</h2><ol><li><p>第一项：</p><ul><li>第一项嵌套的第一个元素</li><li>第一项嵌套的第二个元素</li></ul></li><li><p>第二项</p><ul><li>第二项嵌套的第一个元素</li><li>第二项嵌套的第二个元素</li></ul></li></ol><h2 id="Markdown区块"><a href="#Markdown区块" class="headerlink" title="Markdown区块"></a>Markdown区块</h2><blockquote><p>区块引用</p><p>学的不仅是技术更是梦想</p></blockquote><h4 id="区块嵌套"><a href="#区块嵌套" class="headerlink" title="区块嵌套"></a>区块嵌套</h4><blockquote><p>最外层</p><blockquote><p>第一次嵌套</p><blockquote><p>第二次嵌套</p></blockquote></blockquote></blockquote><h4 id="区块中使用列表"><a href="#区块中使用列表" class="headerlink" title="区块中使用列表"></a>区块中使用列表</h4><blockquote><p>区块中使用列表</p><ol><li>第一项</li><li>第二项</li></ol><ul><li>第一项</li><li>第二项</li></ul></blockquote><h4 id="列表中使用区块"><a href="#列表中使用区块" class="headerlink" title="列表中使用区块"></a>列表中使用区块</h4><ul><li><p>第一项</p><blockquote><p>列表一</p><p>列表二</p></blockquote></li><li><p>第二项</p></li></ul><h2 id="Markdown代码"><a href="#Markdown代码" class="headerlink" title="Markdown代码"></a>Markdown代码</h2><p><code>printf()</code>函数</p><h5 id="代码区块"><a href="#代码区块" class="headerlink" title="代码区块"></a>代码区块</h5><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre><h2 id="Markdown链接"><a href="#Markdown链接" class="headerlink" title="Markdown链接"></a>Markdown链接</h2><p>这是一个链接<a href="www.baidu.com">百度</a></p><p>&lt;<a href="http://www.baidu.com&gt;/">www.baidu.com&gt;</a></p><h5 id="高级链接"><a href="#高级链接" class="headerlink" title="高级链接"></a>高级链接</h5><p>这个链接用1作为网址变量<a href="www.baidu.com">Google</a></p><p>这个链接用runoob作为网址变量<a href="www.runoob.com">Runoob</a></p><h2 id="Markdown图片"><a href="#Markdown图片" class="headerlink" title="Markdown图片"></a>Markdown图片</h2><p><img src="http://static.runoob.com/images/runoob-logo.png" alt="RUNOOB 图标"></p><p><img src="http://static.runoob.com/images/runoob-logo.png" alt="RUNOOB 图标" title="RUNOOB"></p><img src="http://static.runoob.com/images/runoob-logo.png" width="50%"><pre class=" language-sequence"><code class="language-sequence">对象A->对象B: 对象B你好吗?（请求）Note right of 对象B: 对象B的描述Note left of 对象A: 对象A的描述(提示)对象B-->对象A: 我很好(响应)对象A->对象B: 你真的好吗？</code></pre><pre class=" language-mermaid"><code class="language-mermaid">%% 时序图例子,-> 直线，-->虚线，->>实线箭头  sequenceDiagram    participant 张三    participant 李四    张三->王五: 王五你好吗？    loop 健康检查        王五->王五: 与疾病战斗    end    Note right of 王五: 合理 食物 <br/>看医生...    李四-->>张三: 很好!    王五->李四: 你怎么样?    李四-->王五: 很好!</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Markdown </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Markdown </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World《初始我的博客世界》</title>
       <link href="/2021/11/08/hello-world/"/>
       <url>/2021/11/08/hello-world/</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><hr><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></tbody></table>]]></content>
       
       
       <categories>
@@ -42,6 +75,33 @@
             <tag> hexo </tag>
             
             <tag> others </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Centos7安装Docker</title>
+      <link href="/2021/11/08/Centos7%E5%AE%89%E8%A3%85Docker/"/>
+      <url>/2021/11/08/Centos7%E5%AE%89%E8%A3%85Docker/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> hexo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> centos </tag>
             
         </tags>
       
