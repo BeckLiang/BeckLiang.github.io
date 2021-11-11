@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Windows下将Redis注册为本地服务</title>
+      <link href="/2021/11/11/Windows%E4%B8%8B%E5%B0%86Redis%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/"/>
+      <url>/2021/11/11/Windows%E4%B8%8B%E5%B0%86Redis%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>当前redis版本：3.2.100</p><p>通常情况下我们可以通过 redis-server.exe 和配置文件启动redis服务 :</p><pre class=" language-c"><code class="language-c">redis<span class="token operator">-</span>server<span class="token punctuation">.</span>exe redis<span class="token punctuation">.</span>windows<span class="token punctuation">.</span>conf</code></pre><p>另外开启一个命令行窗口 redis-cli.exe 即可做一些简单的操作命令行</p><p>但如果我们关闭控制台，那么Redis服务也跟随着一起关闭了，想使用的时候又得执行命令重新开启动redis 服务，是非常低效又麻烦的。</p><p>在Windows中有个本地服务的概念，我们的目标就是将Redis注册成这里面的一个服务，然后就可以不受控制台退出的影响了。</p></blockquote><h2 id="1、注册为本地服务"><a href="#1、注册为本地服务" class="headerlink" title="1、注册为本地服务"></a>1、注册为本地服务</h2><h3 id="1-1、进入redis安装目录"><a href="#1-1、进入redis安装目录" class="headerlink" title="1.1、进入redis安装目录"></a>1.1、进入redis安装目录</h3><blockquote><p><img src="20211111101612.png"></p></blockquote><h3 id="1-2、输入命令：redis-server-exe-–service-install-redis-windows-conf"><a href="#1-2、输入命令：redis-server-exe-–service-install-redis-windows-conf" class="headerlink" title="1.2、输入命令：redis-server.exe –service-install redis.windows.conf"></a>1.2、输入命令：redis-server.exe –service-install redis.windows.conf</h3><blockquote><p><img src="858580-20171012112847652-488696603.png"></p></blockquote><ul><li><p>从图中看到已成功授权并且注册成功，接下来，我们到windows服务（右键单击windows菜单-》计算机管理-》服务和应用程序-》服务）中去看一下是否有redis服务：</p><blockquote><p><img src="858580-20171012113058965-1642434446.png"></p></blockquote></li><li><p>我们能够发现计算机中已经有非常多的服务了，并且Redis也在其中，说明我们真的注册成功了。此时我们用客户端连接是不行的，因为还没有启动。</p></li></ul><h2 id="2、开启Redis服务"><a href="#2、开启Redis服务" class="headerlink" title="2、开启Redis服务"></a>2、开启Redis服务</h2><ul><li><p>方法一：选中Redis项右击-》启动</p><blockquote><p><img src="858580-20171012114157371-800771553.png"></p></blockquote></li><li><p>方法二：redis-server –service-start</p><blockquote><p><img src="858580-20171012114517387-855342882.png"></p></blockquote></li><li><p>开启成功后，可以看到Redis项状态变为 正在运行，如下图：</p><blockquote><p><img src="858580-20171012114722215-855272634.png"></p></blockquote></li></ul><p>到这里，我们就可以用 redis-cli 成功连接redis服务了。</p><h2 id="3、命令整理"><a href="#3、命令整理" class="headerlink" title="3、命令整理"></a>3、命令整理</h2><ul><li>注册服务<ul><li> redis-server –service-install redis.windows.conf</li></ul></li><li>删除服务<ul><li>redis-server –service-uninstall</li></ul></li><li>开启服务 <ul><li>redis-server –service-start</li></ul></li><li>停止服务<ul><li>redis-server –service-stop</li></ul></li></ul><h2 id="4、创建多个Redis实例"><a href="#4、创建多个Redis实例" class="headerlink" title="4、创建多个Redis实例"></a>4、创建多个Redis实例</h2><h3 id="4-1：复制一份redis-windows-conf-配置文件，改名为-redis-windows10001-conf"><a href="#4-1：复制一份redis-windows-conf-配置文件，改名为-redis-windows10001-conf" class="headerlink" title="4.1：复制一份redis.windows.conf 配置文件，改名为 redis.windows10001.conf"></a>4.1：复制一份redis.windows.conf 配置文件，改名为 redis.windows10001.conf</h3><blockquote><p><img src="858580-20171012122412371-1940531396.png"></p></blockquote><h3 id="4-2：更改-redis-windows10001-conf-配置文件的信息"><a href="#4-2：更改-redis-windows10001-conf-配置文件的信息" class="headerlink" title="4.2：更改 redis.windows10001.conf 配置文件的信息"></a>4.2：更改 redis.windows10001.conf 配置文件的信息</h3><blockquote><p>端口号 port 为 10001</p><p>其他先不作说明</p></blockquote><h3 id="4-3：注册为windows服务"><a href="#4-3：注册为windows服务" class="headerlink" title="4.3：注册为windows服务"></a>4.3：注册为windows服务</h3><ul><li><p>redis-server.exe –service-install redis.windows10001.conf –service-name redis10001 –port 10001</p><blockquote><p><img src="858580-20171012123203434-1905733346.png"></p></blockquote></li><li><p>从windows服务中可以看到，有两个redis服务，刚才注册的是redis10001，服务还未开启，如下图所示：</p><blockquote><p><img src="858580-20171012123240059-1708003071.png"></p></blockquote></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Redis </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> windows </tag>
+            
+            <tag> redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Windows系统下MySQL-mysql 8.0.12安装教程</title>
       <link href="/2021/11/10/Windows%E7%B3%BB%E7%BB%9F%E4%B8%8BMySQL-mysql-8-0-12%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"/>
       <url>/2021/11/10/Windows%E7%B3%BB%E7%BB%9F%E4%B8%8BMySQL-mysql-8-0-12%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
