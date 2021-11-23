@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>使用nacos作为配置中心</title>
+      <link href="/2021/11/23/%E4%BD%BF%E7%94%A8nacos%E4%BD%9C%E4%B8%BA%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/"/>
+      <url>/2021/11/23/%E4%BD%BF%E7%94%A8nacos%E4%BD%9C%E4%B8%BA%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1、如何使用nacos作为配置中心统一管理配置"><a href="#1、如何使用nacos作为配置中心统一管理配置" class="headerlink" title="1、如何使用nacos作为配置中心统一管理配置"></a>1、如何使用nacos作为配置中心统一管理配置</h2><h3 id="1-POM引入依赖"><a href="#1-POM引入依赖" class="headerlink" title="(1)POM引入依赖"></a>(1)POM引入依赖</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-alibaba-nacos-config<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre><h3 id="2-创建一个bootstrap-properties文件"><a href="#2-创建一个bootstrap-properties文件" class="headerlink" title="(2)创建一个bootstrap.properties文件"></a>(2)创建一个bootstrap.properties文件</h3><pre class=" language-properties"><code class="language-properties"><span class="token attr-name">spring.application.name</span><span class="token punctuation">=</span><span class="token attr-value">gull-coupon</span><span class="token attr-name">spring.cloud.nacos.config.server-addr</span><span class="token punctuation">=</span><span class="token attr-value">192.168.2.160:8848</span></code></pre><blockquote><p><img src="20211123234113.png"></p></blockquote><h3 id="3-需要给配置中心默认添加一个叫-数据集（Dara-Id-gull-coupon-properties。默认规则，应用名-properties"><a href="#3-需要给配置中心默认添加一个叫-数据集（Dara-Id-gull-coupon-properties。默认规则，应用名-properties" class="headerlink" title="(3)需要给配置中心默认添加一个叫 数据集（Dara Id) gull-coupon.properties。默认规则，应用名.properties"></a>(3)需要给配置中心默认添加一个叫 数据集（Dara Id) gull-coupon.properties。默认规则，应用名.properties</h3><blockquote><p><img src="20211123234353.png"></p></blockquote><h3 id="4-给-应用名-properties-添加任何配置"><a href="#4-给-应用名-properties-添加任何配置" class="headerlink" title="(4)给  应用名.properties 添加任何配置"></a>(4)给  应用名.properties 添加任何配置</h3><blockquote><p><img src="20211123234353.png"></p></blockquote><h3 id="5-动态获取配置"><a href="#5-动态获取配置" class="headerlink" title="(5)动态获取配置"></a>(5)动态获取配置</h3><pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RefreshScope</span>：动态获取并刷新配置<span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span>"$<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>配置项的名<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span>：获取到配置</code></pre><p><font color="red"><em><strong>注意：</strong></em></font>如果配置中心和当前应用的配置文件中都配置了相同的项，优先使用配置中心的配置</p><blockquote><p><img src="20211123234731.png"></p></blockquote><h2 id="2、细节"><a href="#2、细节" class="headerlink" title="2、细节"></a>2、细节</h2><h3 id="1-命名空间"><a href="#1-命名空间" class="headerlink" title="(1)命名空间"></a>(1)命名空间</h3><blockquote><p>用于进行租户粒度的配置隔离。不同的命名空间下，可以存在相同的 <strong>Group</strong> 或 <strong>Data ID</strong> 的</p><p>配置。<strong>Namespace</strong> 的常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生</p><p>产环境的资源（如配置、服务）隔离等。</p></blockquote><ul><li><p>默认：public（保留空间），默认新增的所有配置都在public空间</p><ol><li><p>利用命名空间来做环境隔离：开发、测试、生产</p><p><font color="red"><em><strong>注意：</strong></em></font>在bootstrap.properties配置上，需要使用哪个命名空间下的配置</p><pre class=" language-properties"><code class="language-properties"><span class="token attr-name">spring.cloud.nacos.config.namespace</span><span class="token punctuation">=</span><span class="token attr-value">61cf105d-36a7-494b-b552-42112bfdd2f4</span></code></pre></li></ol><blockquote><p><img src="20211124000327.png"></p></blockquote><ol start="2"><li>sasa</li><li></li></ol></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> nacos </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> springCloud </tag>
+            
+            <tag> 微服务 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Windows下将Redis注册为本地服务</title>
       <link href="/2021/11/11/Windows%E4%B8%8B%E5%B0%86Redis%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/"/>
       <url>/2021/11/11/Windows%E4%B8%8B%E5%B0%86Redis%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/</url>
