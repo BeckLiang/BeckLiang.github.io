@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="使用nacos作为配置中心, 博客">
-    <meta name="description" content="nacos既可以作为服务注册和发现，也可以作为配置中心。使用nacos作为配置中心的关键配置">
+    <meta name="description" content="nacos既可以作为服务注册和发现，也可以作为配置中心。使用nacos整合springcloud作为配置中心的关键配置信息如文中所述">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -410,14 +410,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    342
+                    864
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -478,11 +478,49 @@
 <blockquote>
 <p><img src="20211124000327.png"></p>
 </blockquote>
-<ol start="2">
-<li>sasa</li>
-<li></li>
-</ol>
+<pre><code> 2. 每一个微服务之间互相隔离配置，每一个微服务都创建自己的命名空间，只加载自己命名空间下的配置。
+</code></pre>
 </li>
+</ul>
+<h3 id="2-配置集"><a href="#2-配置集" class="headerlink" title="(2)配置集"></a>(2)配置集</h3><blockquote>
+<p>一组相关或者不相关的配置项的集合称为配置集。在系统中，一个配置文件通常就是一个配</p>
+<p>置集，包含了系统各个方面的配置。例如，一个配置集可能包含了数据源、线程池、日志级</p>
+<p>别等配置项。</p>
+</blockquote>
+<h3 id="3-配置集ID-类似文件名"><a href="#3-配置集ID-类似文件名" class="headerlink" title="(3)配置集ID(类似文件名)"></a>(3)配置集ID(类似文件名)</h3><blockquote>
+<p>Nacos 中的某个配置集的 ID。配置集 ID 是组织划分配置的维度之一。<strong>Data ID</strong> 通常用于组</p>
+<p>织划分系统的配置集。一个系统或者应用可以包含多个配置集，每个配置集都可以被一个有</p>
+<p>意义的名称标识。Data ID 通常采用类 Java 包（如 com.taobao.tc.refund.log.level）的命名</p>
+<p>规则保证全局唯一性。此命名规则非强制。 </p>
+</blockquote>
+<ul>
+<li>Data ID:类似文件名</li>
+</ul>
+<h3 id="4-配置分组"><a href="#4-配置分组" class="headerlink" title="(4) 配置分组"></a>(4) 配置分组</h3><blockquote>
+<p>Nacos 中的一组配置集，是组织配置的维度之一。通过一个有意义的字符串（如 Buy 或</p>
+<p>Trade ）对配置集进行分组，从而区分 Data ID 相同的配置集。当您在 Nacos 上创建一个</p>
+<p>配置时，如果未填写配置分组的名称，则配置分组的名称默认采用 DEFAULT_GROUP 。配置</p>
+<p>分组的常见场景：不同的应用或组件使用了相同的配置类型，如 database_url 配置和</p>
+<p>MQ_topic 配置。</p>
+</blockquote>
+<ul>
+<li>默认所有的配置集都属于：DEFAULT_GROUP</li>
+</ul>
+<p><em><strong>项目中的使用：每个微服务创建自己的命名空间，使用配置分组区分环境，dev、test、prod</strong></em></p>
+<h2 id="3、同时加载多个配置"><a href="#3、同时加载多个配置" class="headerlink" title="3、同时加载多个配置"></a>3、同时加载多个配置</h2><ul>
+<li>微服务任何配置信息，任何配置文件都可以放在配置中心中</li>
+</ul>
+<blockquote>
+<p><img src="20211124230138.png"></p>
+</blockquote>
+<ul>
+<li>只需要在bootstrap.properties说明加载配置中心中哪些配置文件即可。</li>
+</ul>
+<blockquote>
+<p><img src="20211124230251.png"></p>
+</blockquote>
+<ul>
+<li>使用之前springboot注解@Value、@ConfigurationProperties从配置文件中获取值。配置中心有的优先使用配置中心的值。</li>
 </ul>
 
                 
@@ -739,7 +777,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            nacos既可以作为服务注册和发现，也可以作为配置中心。使用nacos作为配置中心的关键配置
+                            nacos既可以作为服务注册和发现，也可以作为配置中心。使用nacos整合springcloud作为配置中心的关键配置信息如文中所述
                         
                     </div>
                     <div class="publish-info">
@@ -1023,7 +1061,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">2.3k</span>
+                        class="white-color">2.8k</span>
             
             
             
