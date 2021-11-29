@@ -4,9 +4,65 @@
   
     
     <entry>
+      <title>Docker安装nacos（启动、停止、删除）</title>
+      <link href="/2021/11/29/Docker%E5%AE%89%E8%A3%85nacos%EF%BC%88%E5%90%AF%E5%8A%A8%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E5%88%A0%E9%99%A4%EF%BC%89/"/>
+      <url>/2021/11/29/Docker%E5%AE%89%E8%A3%85nacos%EF%BC%88%E5%90%AF%E5%8A%A8%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E5%88%A0%E9%99%A4%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<p><em><strong>自定义制作镜像<a href="https://github.com/nacos-group/nacos-docker/blob/master/README_ZH.md">官方说明文档</a></strong></em></p><h2 id="1、搜索nacos镜像"><a href="#1、搜索nacos镜像" class="headerlink" title="1、搜索nacos镜像"></a>1、搜索nacos镜像</h2><pre class=" language-shell"><code class="language-shell">docker search nacos</code></pre><blockquote><p><img src="image-20211129161637201.png"></p></blockquote><h2 id="2、下载镜像"><a href="#2、下载镜像" class="headerlink" title="2、下载镜像"></a>2、下载镜像</h2><pre class=" language-shell"><code class="language-shell">docker pull nacos/nacos-server</code></pre><blockquote><p><img src="20211129161823.png"></p></blockquote><h2 id="3、查看本地镜像，看看拉到本地没有"><a href="#3、查看本地镜像，看看拉到本地没有" class="headerlink" title="3、查看本地镜像，看看拉到本地没有"></a>3、查看本地镜像，看看拉到本地没有</h2><pre class=" language-shell"><code class="language-shell">docker images</code></pre><blockquote><p><img src="20211129161950.png"></p></blockquote><h2 id="4、启动镜像-官方文档"><a href="#4、启动镜像-官方文档" class="headerlink" title="4、启动镜像 官方文档"></a>4、启动镜像 <a href="https://nacos.io/zh-cn/docs/quick-start-docker.html">官方文档</a></h2><h3 id="4-1、单机版部署"><a href="#4-1、单机版部署" class="headerlink" title="4.1、单机版部署"></a>4.1、单机版部署</h3><ul><li>单机版部署很多简单，直接一条命令即可完成，通过 <code>MODE</code> 来设置使用单机模式；注意如果是多网卡的话需要配置NACOS_SERVER_IP参数来指定IP，否则可能会导致外网无法访问；</li></ul><pre class=" language-shell"><code class="language-shell">docker run --env MODE=standalone --name nacos -d -p 192.168.56.110:8848:8848 nacos/nacos-server</code></pre><ul><li>启动成功后访问<code>http://192.168.56.110:8848/nacos/index.html</code> 即可，默认是账号和密码都是nacos。</li></ul><h3 id="4-2、集群版部署"><a href="#4-2、集群版部署" class="headerlink" title="4.2、集群版部署"></a>4.2、集群版部署</h3><ul><li>同样准备3台服务器；分别执行如下命令；注意<code>NACOS_SERVER_IP</code> 参数需要修改为各个服务器自己的IP地址。</li></ul><pre class=" language-shell"><code class="language-shell">docker run -d --name nacos-cluster -p 8848:8848 \  --env NACOS_SERVERS=192.168.56.102,192.168.56.104,192.168.56.105 \  --env NACOS_SERVER_IP=192.168.56.102 \  --env SPRING_DATASOURCE_PLATFORM=mysql \  --env MYSQL_SERVICE_HOST=192.168.56.103 \  --env MYSQL_SERVICE_DB_NAME=nacos \  --env MYSQL_SERVICE_USER=root \  --env MYSQL_SERVICE_PASSWORD=123456 \  --env MYSQL_DATABASE_NUM=1 \  nacos/nacos-server</code></pre><ul><li>参数说明：<ul><li><code>NACOS_SERVERS</code> : 集群节点信息</li><li><code>NACOS_SERVER_IP</code> : 服务IP，多网卡模式下建议指定</li><li><code>SPRING_DATASOURCE_PLATFORM</code> : 使用数据库类型</li><li><code>MYSQL_SERVICE_HOST</code> : MySQL数据库地址</li><li><code>MYSQL_SERVICE_DB_NAME</code> : 数据库名称</li><li><code>MYSQL_SERVICE_DB_NAME</code> : 数据库用户名</li><li><code>MYSQL_SERVICE_PASSWORD</code> : 数据库密码</li><li><code>MYSQL_DATABASE_NUM</code> : 数据库数量，默认就是1，可以不填写</li></ul></li><li>至此集群就搭建完成了。可以通过docker日志命令查询nacos的日志信息(<code>docker logs -ft --tail 200 nacos-cluster</code> )</li></ul><h2 id="5、停止nacos镜像"><a href="#5、停止nacos镜像" class="headerlink" title="5、停止nacos镜像"></a>5、停止nacos镜像</h2><pre class=" language-shell"><code class="language-shell">docker stop c3e7db24c74d</code></pre><blockquote><p><img src="20211129163851.png"></p></blockquote><ul><li>图中标红的是容器id，根据容器id停止对应的镜像</li></ul><h2 id="6、删除nacos镜像"><a href="#6、删除nacos镜像" class="headerlink" title="6、删除nacos镜像"></a>6、删除nacos镜像</h2><pre class=" language-shell"><code class="language-shell">docker rm c3e7db24c74d</code></pre><blockquote><p><img src="20211129163851.png"></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> nacos </category>
+          
+          <category> docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> centos </tag>
+            
+            <tag> nacos </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker安装Mysql</title>
+      <link href="/2021/11/27/Docker%E5%AE%89%E8%A3%85Mysql/"/>
+      <url>/2021/11/27/Docker%E5%AE%89%E8%A3%85Mysql/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1、下载镜像文件"><a href="#1、下载镜像文件" class="headerlink" title="1、下载镜像文件"></a>1、下载镜像文件</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL# </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> centos </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Centos7安装docker</title>
-      <link href="/2021/11/27/Centos7%E5%AE%89%E8%A3%85docker/"/>
-      <url>/2021/11/27/Centos7%E5%AE%89%E8%A3%85docker/</url>
+      <link href="/2021/11/27/Centos7%E5%AE%89%E8%A3%85Docker/"/>
+      <url>/2021/11/27/Centos7%E5%AE%89%E8%A3%85Docker/</url>
       
         <content type="html"><![CDATA[<blockquote><p><em>Docker安装文档：<a href="https://docs.docker.com/install/linux/docker-ce/centos/">https://docs.docker.com/install/linux/docker-ce/centos/</a></em></p></blockquote><h2 id="1、卸载Centos7之前已经安装的docker"><a href="#1、卸载Centos7之前已经安装的docker" class="headerlink" title="1、卸载Centos7之前已经安装的docker"></a>1、卸载Centos7之前已经安装的docker</h2><pre class=" language-shell"><code class="language-shell">sudo yum remove docker \docker-client \docker-client-latest \docker-common \docker-latest \docker-latest-logrotate \docker-logrotate \docker-engine</code></pre><h2 id="2、安装Docker-CE"><a href="#2、安装Docker-CE" class="headerlink" title="2、安装Docker-CE"></a>2、安装Docker-CE</h2><h3 id="2-1、安装必须的依赖"><a href="#2-1、安装必须的依赖" class="headerlink" title="2.1、安装必须的依赖"></a>2.1、安装必须的依赖</h3><pre class=" language-shell"><code class="language-shell">sudo yum install -y yum-utils \device-mapper-persistent-data \lvm2</code></pre><h3 id="2-2、设置-docker-中央仓库的yum位置"><a href="#2-2、设置-docker-中央仓库的yum位置" class="headerlink" title="2.2、设置 docker 中央仓库的yum位置"></a>2.2、设置 docker 中央仓库的yum位置</h3><pre class=" language-shell"><code class="language-shell">sudo yum-config-manager \--add-repo \https://download.docker.com/linux/centos/docker-ce.repo</code></pre><h3 id="2-3、安装docker，以及docker-cli"><a href="#2-3、安装docker，以及docker-cli" class="headerlink" title="2.3、安装docker，以及docker-cli"></a>2.3、安装docker，以及docker-cli</h3><pre class=" language-shell"><code class="language-shell">sudo yum install docker-ce docker-ce-cli containerd.io</code></pre><h2 id="3、启动docker"><a href="#3、启动docker" class="headerlink" title="3、启动docker"></a>3、启动docker</h2><pre class=" language-shell"><code class="language-shell">sudo systemctl start docker</code></pre><h2 id="4、设置docker开机自启"><a href="#4、设置docker开机自启" class="headerlink" title="4、设置docker开机自启"></a>4、设置docker开机自启</h2><pre class=" language-shell"><code class="language-shell">sudo systemctl enable docker</code></pre><h2 id="5、测试docker命令，需要切换到root用户下"><a href="#5、测试docker命令，需要切换到root用户下" class="headerlink" title="5、测试docker命令，需要切换到root用户下"></a>5、测试docker命令，需要切换到root用户下</h2><blockquote><p><a href="https://docs.docker.com/engine/reference/commandline/docker/">https://docs.docker.com/engine/reference/commandline/docker/</a></p></blockquote><h2 id="6、配置docker镜像加速"><a href="#6、配置docker镜像加速" class="headerlink" title="6、配置docker镜像加速"></a>6、配置docker镜像加速</h2><blockquote><p>阿里云，容器镜像服务</p><p>针对 Docker 客户端版本大于 1.10.0 的用户</p><p>修改 daemon 配置文件/etc/docker/daemon.json 来使用加速器</p><p>1、sudo mkdir -p /etc/docker</p><p>2、sudo tee /etc/docker/daemon.json &lt;&lt;-‘EOF’ </p><p>{ </p><p>“registry-mirrors”: [“<a href="https://82m9ar63.mirror.aliyuncs.com&quot;]">https://82m9ar63.mirror.aliyuncs.com&quot;]</a></p><p>}</p><p>EOF</p><p>3、sudo systemctl daemon-reload</p><p>4、sudo systemctl restart docker</p></blockquote><p><img src="20211127225155.png"></p><p><img src="20211127225428.png"></p>]]></content>
       
