@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="使用nacos作为配置中心, 博客">
-    <meta name="description" content="nacos既可以作为服务注册和发现，也可以作为配置中心。使用nacos整合springcloud作为配置中心的关键配置信息如文中所述">
+    <meta name="keywords" content="Docker 安装ElasticSearch, 博客">
+    <meta name="description" content="Elasticsearch是一个用Java开发的，开源的内存数据库，最开始是包含在Apache Lucene库中。Elastic 是 Lucene 的封装，提供了 REST API 的操作接口，开箱即用。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>使用nacos作为配置中心 | 博客</title>
+    <title>Docker 安装ElasticSearch | 博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -246,12 +246,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/images/nacos.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/es.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">使用nacos作为配置中心</h1>
+                    <h1 class="description center-align post-title">Docker 安装ElasticSearch</h1>
                 </div>
             </div>
         </div>
@@ -367,12 +367,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/springCloud/">
-                                <span class="chip bg-color">springCloud</span>
+                            <a href="/tags/centos/">
+                                <span class="chip bg-color">centos</span>
                             </a>
                         
-                            <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
-                                <span class="chip bg-color">微服务</span>
+                            <a href="/tags/ElasticSearch/">
+                                <span class="chip bg-color">ElasticSearch</span>
                             </a>
                         
                     </div>
@@ -383,8 +383,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/nacos/" class="post-category">
-                                nacos
+                            <a href="/categories/ElasticSearch/" class="post-category">
+                                ElasticSearch
+                            </a>
+                        
+                            <a href="/categories/ElasticSearch/docker/" class="post-category">
+                                docker
                             </a>
                         
                     </div>
@@ -396,28 +400,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-23
+                    2022-01-09
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-29
+                    2022-01-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    864
+                    367
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    1 分
                 </div>
                 
 
@@ -437,90 +441,89 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1、如何使用nacos作为配置中心统一管理配置"><a href="#1、如何使用nacos作为配置中心统一管理配置" class="headerlink" title="1、如何使用nacos作为配置中心统一管理配置"></a>1、如何使用nacos作为配置中心统一管理配置</h2><h3 id="1-POM引入依赖"><a href="#1-POM引入依赖" class="headerlink" title="(1)POM引入依赖"></a>(1)POM引入依赖</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-alibaba-nacos-config<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-</code></pre>
-<h3 id="2-创建一个bootstrap-properties文件"><a href="#2-创建一个bootstrap-properties文件" class="headerlink" title="(2)创建一个bootstrap.properties文件"></a>(2)创建一个bootstrap.properties文件</h3><pre class=" language-properties"><code class="language-properties"><span class="token attr-name">spring.application.name</span><span class="token punctuation">=</span><span class="token attr-value">gull-coupon</span>
-<span class="token attr-name">spring.cloud.nacos.config.server-addr</span><span class="token punctuation">=</span><span class="token attr-value">192.168.2.160:8848</span>
+                <h2 id="一、下载镜像文件"><a href="#一、下载镜像文件" class="headerlink" title="一、下载镜像文件"></a>一、下载镜像文件</h2><ul>
+<li><p>1、存储和检索数据</p>
+<pre class=" language-shell"><code class="language-shell">docker pull elasticsearch:7.4.2
 </code></pre>
 <blockquote>
-<p><img src="20211123234113.png"></p>
+<p><img src="20220109233431.png"></p>
 </blockquote>
-<h3 id="3-需要给配置中心默认添加一个叫-数据集（Dara-Id-gull-coupon-properties。默认规则，应用名-properties"><a href="#3-需要给配置中心默认添加一个叫-数据集（Dara-Id-gull-coupon-properties。默认规则，应用名-properties" class="headerlink" title="(3)需要给配置中心默认添加一个叫 数据集（Dara Id) gull-coupon.properties。默认规则，应用名.properties"></a>(3)需要给配置中心默认添加一个叫 数据集（Dara Id) gull-coupon.properties。默认规则，应用名.properties</h3><blockquote>
-<p><img src="20211123234353.png"></p>
-</blockquote>
-<h3 id="4-给-应用名-properties-添加任何配置"><a href="#4-给-应用名-properties-添加任何配置" class="headerlink" title="(4)给  应用名.properties 添加任何配置"></a>(4)给  应用名.properties 添加任何配置</h3><blockquote>
-<p><img src="20211123234353.png"></p>
-</blockquote>
-<h3 id="5-动态获取配置"><a href="#5-动态获取配置" class="headerlink" title="(5)动态获取配置"></a>(5)动态获取配置</h3><pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RefreshScope</span>：动态获取并刷新配置
-<span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span>"$<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>配置项的名<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span>：获取到配置
-</code></pre>
-<p><font color="red"><em><strong>注意：</strong></em></font>如果配置中心和当前应用的配置文件中都配置了相同的项，优先使用配置中心的配置</p>
-<blockquote>
-<p><img src="20211123234731.png"></p>
-</blockquote>
-<h2 id="2、细节"><a href="#2、细节" class="headerlink" title="2、细节"></a>2、细节</h2><h3 id="1-命名空间"><a href="#1-命名空间" class="headerlink" title="(1)命名空间"></a>(1)命名空间</h3><blockquote>
-<p>用于进行租户粒度的配置隔离。不同的命名空间下，可以存在相同的 <strong>Group</strong> 或 <strong>Data ID</strong> 的</p>
-<p>配置。<strong>Namespace</strong> 的常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生</p>
-<p>产环境的资源（如配置、服务）隔离等。</p>
-</blockquote>
-<ul>
-<li><p>默认：public（保留空间），默认新增的所有配置都在public空间</p>
-<ol>
-<li><p>利用命名空间来做环境隔离：开发、测试、生产</p>
-<p><font color="red"><em><strong>注意：</strong></em></font>在bootstrap.properties配置上，需要使用哪个命名空间下的配置</p>
-<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">spring.cloud.nacos.config.namespace</span><span class="token punctuation">=</span><span class="token attr-value">61cf105d-36a7-494b-b552-42112bfdd2f4</span>
-</code></pre>
 </li>
-</ol>
-<blockquote>
-<p><img src="20211124000327.png"></p>
-</blockquote>
-<pre><code> 2. 每一个微服务之间互相隔离配置，每一个微服务都创建自己的命名空间，只加载自己命名空间下的配置。
+<li><p>2、 可视化检索数据</p>
+<pre><code>docker pull kibana:7.4.2
 </code></pre>
+<blockquote>
+<p><img src="20220109234034.png"></p>
+</blockquote>
 </li>
 </ul>
-<h3 id="2-配置集"><a href="#2-配置集" class="headerlink" title="(2)配置集"></a>(2)配置集</h3><blockquote>
-<p>一组相关或者不相关的配置项的集合称为配置集。在系统中，一个配置文件通常就是一个配</p>
-<p>置集，包含了系统各个方面的配置。例如，一个配置集可能包含了数据源、线程池、日志级</p>
-<p>别等配置项。</p>
-</blockquote>
-<h3 id="3-配置集ID-类似文件名"><a href="#3-配置集ID-类似文件名" class="headerlink" title="(3)配置集ID(类似文件名)"></a>(3)配置集ID(类似文件名)</h3><blockquote>
-<p>Nacos 中的某个配置集的 ID。配置集 ID 是组织划分配置的维度之一。<strong>Data ID</strong> 通常用于组</p>
-<p>织划分系统的配置集。一个系统或者应用可以包含多个配置集，每个配置集都可以被一个有</p>
-<p>意义的名称标识。Data ID 通常采用类 Java 包（如 com.taobao.tc.refund.log.level）的命名</p>
-<p>规则保证全局唯一性。此命名规则非强制。 </p>
-</blockquote>
+<h2 id="二、创建实例"><a href="#二、创建实例" class="headerlink" title="二、创建实例"></a>二、创建实例</h2><ul>
+<li><p>1、ElasticSearch</p>
 <ul>
-<li>Data ID:类似文件名</li>
-</ul>
-<h3 id="4-配置分组"><a href="#4-配置分组" class="headerlink" title="(4) 配置分组"></a>(4) 配置分组</h3><blockquote>
-<p>Nacos 中的一组配置集，是组织配置的维度之一。通过一个有意义的字符串（如 Buy 或</p>
-<p>Trade ）对配置集进行分组，从而区分 Data ID 相同的配置集。当您在 Nacos 上创建一个</p>
-<p>配置时，如果未填写配置分组的名称，则配置分组的名称默认采用 DEFAULT_GROUP 。配置</p>
-<p>分组的常见场景：不同的应用或组件使用了相同的配置类型，如 database_url 配置和</p>
-<p>MQ_topic 配置。</p>
-</blockquote>
-<ul>
-<li>默认所有的配置集都属于：DEFAULT_GROUP</li>
-</ul>
-<p><em><strong>项目中的使用：每个微服务创建自己的命名空间，使用配置分组区分环境，dev、test、prod</strong></em></p>
-<h2 id="3、同时加载多个配置"><a href="#3、同时加载多个配置" class="headerlink" title="3、同时加载多个配置"></a>3、同时加载多个配置</h2><ul>
-<li>微服务任何配置信息，任何配置文件都可以放在配置中心中</li>
-</ul>
+<li><p>创建如下配置文件夹，将ElasticSearch的配置文件挂载到此文件夹（虚拟机）</p>
+<pre class=" language-shell"><code class="language-shell">mkdir -p /mydata/elasticsearch/config
+</code></pre>
+</li>
+<li><p>创建如下数据文件夹，将ElasticSearch的数据文件挂载到此文件夹（虚拟机）</p>
+<pre class=" language-shell"><code class="language-shell">mkdir -p /mydata/elasticsearch/data
+</code></pre>
 <blockquote>
-<p><img src="20211124230138.png"></p>
+<p><img src="20220109235159.png"></p>
 </blockquote>
-<ul>
-<li>只需要在bootstrap.properties说明加载配置中心中哪些配置文件即可。</li>
+</li>
+<li><p> 保证权限</p>
+</li>
 </ul>
-<blockquote>
-<p><img src="20211124230251.png"></p>
-</blockquote>
+<pre class=" language-shell"><code class="language-shell">chmod -R 777 /mydata/elasticsearch/
+</code></pre>
 <ul>
-<li>使用之前springboot注解@Value、@ConfigurationProperties从配置文件中获取值。配置中心有的优先使用配置中心的值。</li>
+<li><p>开启ElasticSearch的远程访问（可以被任何机器访问）</p>
+<pre class=" language-shell"><code class="language-shell">echo "http.host: 0.0.0.0" >> /mydata/elasticsearch/config/elasticsearch.yml
+</code></pre>
+<blockquote>
+<p><img src="20220109235427.png"></p>
+</blockquote>
+</li>
+<li><p>–name:起名称；-p 9200:9200 发送restApi时给ElasticSearch9200端口发的请求； -p 9300:9300 分布式集群下的节点之间的通讯端口；-e “discovery.type=single-node”：单节点运行；特别注意：</p>
+<p>-e ES_JAVA_OPTS=”-Xms64m -Xmx256m” \ 测试环境下，设置 ES 的初始内存和最大内存，否则导</p>
+<p>致过大启动不了 ES；-v参数：将ElasticSearch中的配置、数据等挂载到外部（自己创建的文件夹中）;</p>
+<p>-d参数：启动docker镜像</p>
+<pre class=" language-shell"><code class="language-shell">docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+-e "discovery.type=single-node" \
+-e ES_JAVA_OPTS="-Xms64m -Xmx512m" \
+-v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
+-v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-d elasticsearch:7.4.2
+</code></pre>
+<blockquote>
+<p><img src="20220110000737.png"></p>
+</blockquote>
+</li>
+<li><p>实例创建启动完成</p>
+<blockquote>
+<p><img src="20220110000924.png"></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>2、Kibana</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="http://192.168.2.160:9200/">http://192.168.2.160:9200</a> 一定改为自己虚拟机的地址</p>
+<pre class=" language-shlell"><code class="language-shlell">docker run --name kibana -e ELASTICSEARCH_HOSTS=http://192.168.2.160:9200 -p 5601:5601 \
+-d kibana:7.4.2
+</code></pre>
+<blockquote>
+<p><img src="20220110002238.png"> </p>
+</blockquote>
+</li>
+<li><p>Kibana启动成功界面</p>
+<blockquote>
+<p><img src="20220110002500.png"></p>
+</blockquote>
+</li>
+</ul>
+</li>
 </ul>
 
                 
@@ -548,7 +551,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://beckliang.github.io/2021/11/23/%E4%BD%BF%E7%94%A8nacos%E4%BD%9C%E4%B8%BA%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/">https://beckliang.github.io/2021/11/23/%E4%BD%BF%E7%94%A8nacos%E4%BD%9C%E4%B8%BA%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</a>
+                    <a href="https://beckliang.github.io/2022/01/09/Docker-%E5%AE%89%E8%A3%85ElasticSearch/">https://beckliang.github.io/2022/01/09/Docker-%E5%AE%89%E8%A3%85ElasticSearch/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -586,12 +589,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/springCloud/">
-                                    <span class="chip bg-color">springCloud</span>
+                                <a href="/tags/centos/">
+                                    <span class="chip bg-color">centos</span>
                                 </a>
                             
-                                <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
-                                    <span class="chip bg-color">微服务</span>
+                                <a href="/tags/ElasticSearch/">
+                                    <span class="chip bg-color">ElasticSearch</span>
                                 </a>
                             
                         </div>
@@ -760,33 +763,95 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/27/Centos7%E5%AE%89%E8%A3%85Docker/">
+                <a href="/2022/01/09/Docker-%E5%AE%89%E8%A3%85ElasticSearch/">
                     <div class="card-image">
                         
-                        <img src="/images/docker.jpg" class="responsive-img" alt="Centos7安装docker">
+                        <img src="/images/es.jpg" class="responsive-img" alt="Docker 安装ElasticSearch">
                         
-                        <span class="card-title">Centos7安装docker</span>
+                        <span class="card-title">Docker 安装ElasticSearch</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Docker 是一个开源工具，它可以让创建和管理 Linux 容器变得简单，容器就像是轻量级的虚拟机，并且可以以毫秒级的速度来启动或停止。
+                            Elasticsearch是一个用Java开发的，开源的内存数据库，最开始是包含在Apache Lucene库中。Elastic 是 Lucene 的封装，提供了 REST API 的操作接口，开箱即用。
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/docker/" class="post-category">
+                            <a href="/categories/ElasticSearch/" class="post-category">
+                                    ElasticSearch
+                                </a>
+                            
+                            <a href="/categories/ElasticSearch/docker/" class="post-category">
+                                    docker
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/centos/">
+                        <span class="chip bg-color">centos</span>
+                    </a>
+                    
+                    <a href="/tags/ElasticSearch/">
+                        <span class="chip bg-color">ElasticSearch</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/11/29/Docker%E5%AE%89%E8%A3%85nacos%EF%BC%88%E5%90%AF%E5%8A%A8%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E5%88%A0%E9%99%A4%EF%BC%89/">
+                    <div class="card-image">
+                        
+                        <img src="/images/nacos.png" class="responsive-img" alt="Docker安装nacos（启动、停止、删除）">
+                        
+                        <span class="card-title">Docker安装nacos（启动、停止、删除）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            镜像官网可以所有应用，选择安装环境：会给出安装命令，例如：docker pull nacos默认拉取最新的版本(指定版本：docker pull nacos:laster)
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/nacos/" class="post-category">
+                                    nacos
+                                </a>
+                            
+                            <a href="/categories/nacos/docker/" class="post-category">
                                     docker
                                 </a>
                             
@@ -801,56 +866,8 @@
                         <span class="chip bg-color">centos</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/11/11/Windows%E4%B8%8B%E5%B0%86Redis%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/">
-                    <div class="card-image">
-                        
-                        <img src="/images/redis.jpg" class="responsive-img" alt="Windows下将Redis注册为本地服务">
-                        
-                        <span class="card-title">Windows下将Redis注册为本地服务</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Redis是有名的NoSql数据库，一般Linux都会默认支持。但在Windows环境中，可能需要手动安装设置才能有效使用。这里就简单介绍一下Windows下Redis服务的安装方法
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-11
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Redis/" class="post-category">
-                                    Redis
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/windows/">
-                        <span class="chip bg-color">windows</span>
-                    </a>
-                    
-                    <a href="/tags/redis/">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/nacos/">
+                        <span class="chip bg-color">nacos</span>
                     </a>
                     
                 </div>
