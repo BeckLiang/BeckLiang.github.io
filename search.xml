@@ -78,9 +78,9 @@
       
         <tags>
             
-            <tag> docker </tag>
-            
             <tag> centos </tag>
+            
+            <tag> docker </tag>
             
         </tags>
       
@@ -184,9 +184,9 @@
       
         <tags>
             
-            <tag> mysql </tag>
-            
             <tag> windows </tag>
+            
+            <tag> mysql </tag>
             
         </tags>
       
