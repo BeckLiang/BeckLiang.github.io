@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Windows下将Redis注册为本地服务, 博客">
-    <meta name="description" content="Redis是有名的NoSql数据库，一般Linux都会默认支持。但在Windows环境中，可能需要手动安装设置才能有效使用。这里就简单介绍一下Windows下Redis服务的安装方法">
+    <meta name="keywords" content="Centos搭建git服务器, 博客">
+    <meta name="description" content="Git（读音为/gɪt/）是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。也是Linus Torvalds为了帮助管理Linux内核开发而开发的一个开放源码的版本控制软件">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Windows下将Redis注册为本地服务 | 博客</title>
+    <title>Centos搭建git服务器 | 博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -246,12 +246,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/images/redis.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/git.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Windows下将Redis注册为本地服务</h1>
+                    <h1 class="description center-align post-title">Centos搭建git服务器</h1>
                 </div>
             </div>
         </div>
@@ -367,12 +367,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/windows/">
-                                <span class="chip bg-color">windows</span>
-                            </a>
-                        
-                            <a href="/tags/redis/">
-                                <span class="chip bg-color">redis</span>
+                            <a href="/tags/centos/">
+                                <span class="chip bg-color">centos</span>
                             </a>
                         
                     </div>
@@ -383,8 +379,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Redis/" class="post-category">
-                                Redis
+                            <a href="/categories/git/" class="post-category">
+                                git
                             </a>
                         
                     </div>
@@ -396,28 +392,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-11
+                    2022-05-12
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-11
+                    2022-05-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    525
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    5 分
                 </div>
                 
 
@@ -437,85 +433,185 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>当前redis版本：3.2.100</p>
-<p>通常情况下我们可以通过 redis-server.exe 和配置文件启动redis服务 :</p>
-<pre class=" language-c"><code class="language-c">redis<span class="token operator">-</span>server<span class="token punctuation">.</span>exe redis<span class="token punctuation">.</span>windows<span class="token punctuation">.</span>conf
+                <h2 id="①-安装-Git"><a href="#①-安装-Git" class="headerlink" title="① 安装 Git"></a>① 安装 Git</h2><p>Linux 做为服务器端系统，Windows 作为客户端系统，分别安装 Git</p>
+<p><strong>服务器端：</strong></p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost ~]#yum install -y git
 </code></pre>
-<p>另外开启一个命令行窗口 redis-cli.exe 即可做一些简单的操作命令行</p>
-<p>但如果我们关闭控制台，那么Redis服务也跟随着一起关闭了，想使用的时候又得执行命令重新开启动redis 服务，是非常低效又麻烦的。</p>
-<p>在Windows中有个本地服务的概念，我们的目标就是将Redis注册成这里面的一个服务，然后就可以不受控制台退出的影响了。</p>
-</blockquote>
-<h2 id="1、注册为本地服务"><a href="#1、注册为本地服务" class="headerlink" title="1、注册为本地服务"></a>1、注册为本地服务</h2><h3 id="1-1、进入redis安装目录"><a href="#1-1、进入redis安装目录" class="headerlink" title="1.1、进入redis安装目录"></a>1.1、进入redis安装目录</h3><blockquote>
-<p><img src="20211111101612.png"></p>
-</blockquote>
-<h3 id="1-2、输入命令：redis-server-exe-–service-install-redis-windows-conf"><a href="#1-2、输入命令：redis-server-exe-–service-install-redis-windows-conf" class="headerlink" title="1.2、输入命令：redis-server.exe –service-install redis.windows.conf"></a>1.2、输入命令：redis-server.exe –service-install redis.windows.conf</h3><blockquote>
-<p><img src="858580-20171012112847652-488696603.png"></p>
-</blockquote>
-<ul>
-<li><p>从图中看到已成功授权并且注册成功，接下来，我们到windows服务（右键单击windows菜单-》计算机管理-》服务和应用程序-》服务）中去看一下是否有redis服务：</p>
+<p>安装完后，查看 Git 版本</p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost ~]# git --version
+git version 1.8.3.1
+</code></pre>
+<p><strong>客户端：</strong></p>
+<p>下载 <a target="_blank" rel="noopener" href="https://github.com/git-for-windows/git/releases/download/v2.9.3.windows.2/Git-2.9.3.2-64-bit.exe">Git for Windows</a>，地址：<a target="_blank" rel="noopener" href="https://git-for-windows.github.io/">https://git-for-windows.github.io/</a></p>
+<p>安装完之后，可以使用 Git Bash 作为命令行客户端。</p>
+<p>安装完之后，查看 Git 版本</p>
+<pre class=" language-shell"><code class="language-shell">$ git --version
+git version 2.16.2.windows.1
+</code></pre>
 <blockquote>
-<p><img src="858580-20171012113058965-1642434446.png"></p>
+<p><strong>在搭建服务前，还需要先建立git 用户与git用户组</strong></p>
+<p><strong>1. 创建用户组：</strong></p>
+<pre class=" language-shell"><code class="language-shell">$ groupadd git
+</code></pre>
+<p><strong>2. 创建用户：</strong></p>
+<pre class=" language-shell"><code class="language-shell">$ useradd git
+</code></pre>
+<p><strong>3.给git用户设置密码</strong></p>
+<pre class=" language-shell"><code class="language-shell">$ passwd git
+</code></pre>
+<p><strong>4.给git用户分配到git组</strong></p>
+<pre class=" language-shell"><code class="language-shell">$ usermod -g git git
+</code></pre>
 </blockquote>
-</li>
-<li><p>我们能够发现计算机中已经有非常多的服务了，并且Redis也在其中，说明我们真的注册成功了。此时我们用客户端连接是不行的，因为还没有启动。</p>
-</li>
-</ul>
-<h2 id="2、开启Redis服务"><a href="#2、开启Redis服务" class="headerlink" title="2、开启Redis服务"></a>2、开启Redis服务</h2><ul>
-<li><p>方法一：选中Redis项右击-》启动</p>
+<h2 id="②-服务器端创建-Git-仓库"><a href="#②-服务器端创建-Git-仓库" class="headerlink" title="② 服务器端创建 Git 仓库"></a>② 服务器端创建 Git 仓库</h2><p>设置 /home/data/git/gittest.git 为 Git 仓库</p>
+<p>然后把 Git 仓库的 owner 修改为 git</p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost home]# mkdir -p data/git/gittest.git
+[root@localhost home]# git init --bare data/git/gittest.git
+Initialized empty Git repository in /home/data/git/gittest.git/
+[root@localhost home]# cd data/git/
+[root@localhost git]# chown -R git:git gittest.git/
+</code></pre>
+<h2 id="③-客户端-clone-远程仓库"><a href="#③-客户端-clone-远程仓库" class="headerlink" title="③ 客户端 clone 远程仓库"></a>③ 客户端 clone 远程仓库</h2><p>在windows端进入 Git Bash 命令行客户端，创建项目地址（设置在 d:/wamp64/www/gittest_gitbash）并进入:</p>
+<pre class=" language-shell"><code class="language-shell">dee@Lenovo-PC MINGW64 /d
+$ cd wamp64/www
+
+dee@Lenovo-PC MINGW64 /d/wamp64/www
+$ mkdir gittest_gitbash
+
+dee@Lenovo-PC MINGW64 /d/wamp64/www
+$ cd gittest_gitbash
+
+dee@Lenovo-PC MINGW64 /d/wamp64/www/gittest_gitbash
+$
+</code></pre>
+<p>然后从 Linux Git 服务器上 clone 项目：</p>
+<pre class=" language-shell"><code class="language-shell">$ git clone git@192.168.56.101:/home/data/gittest.git
+</code></pre>
+<p>如果SSH用的不是默认的22端口，则需要使用以下的命令（假设SSH端口号是7700）：</p>
+<pre class=" language-shell"><code class="language-shell">$ git clone ssh://git@192.168.56.101:7700/home/data/gittest.git
+</code></pre>
 <blockquote>
-<p><img src="858580-20171012114157371-800771553.png"></p>
+<p><img src="202205121428.png"></p>
 </blockquote>
-</li>
-<li><p>方法二：redis-server –service-start</p>
+<p>当第一次连接到目标 Git 服务器时会得到一个提示：</p>
+<pre class=" language-shell"><code class="language-shell">The authenticity of host '192.168.56.101 (192.168.56.101)' can't be established.
+RSA key fingerprint is SHA256:Ve6WV/SCA059EqoUOzbFoZdfmMh3B259nigfmvdadqQ.
+Are you sure you want to continue connecting (yes/no)? 
+</code></pre>
+<p>选择 yes：</p>
+<pre class=" language-shell"><code class="language-shell">Warning: Permanently added '192.168.56.101' (RSA) to the list of known hosts.
+</code></pre>
+<p>此时 C:\Users\用户名.ssh 下会多出一个文件 known_hosts，以后在这台电脑上再次连接目标 Git 服务器时不会再提示上面的语句。</p>
 <blockquote>
-<p><img src="858580-20171012114517387-855342882.png"></p>
+<p><img src="202205121434.png"></p>
 </blockquote>
-</li>
-<li><p>开启成功后，可以看到Redis项状态变为 正在运行，如下图：</p>
+<p>后面提示要输入密码，可以采用 SSH 公钥来进行验证。</p>
+<h2 id="④-客户端创建-SSH-公钥和私钥"><a href="#④-客户端创建-SSH-公钥和私钥" class="headerlink" title="④ 客户端创建 SSH 公钥和私钥"></a>④ 客户端创建 SSH 公钥和私钥</h2><pre class=" language-shell"><code class="language-shell">$ ssh-keygen -t rsa -C "123456789@qq.com"
+</code></pre>
 <blockquote>
-<p><img src="858580-20171012114722215-855272634.png"></p>
+<p><img src="202205121444.png"></p>
 </blockquote>
-</li>
-</ul>
-<p>到这里，我们就可以用 redis-cli 成功连接redis服务了。</p>
-<h2 id="3、命令整理"><a href="#3、命令整理" class="headerlink" title="3、命令整理"></a>3、命令整理</h2><ul>
-<li>注册服务<ul>
-<li> redis-server –service-install redis.windows.conf</li>
-</ul>
-</li>
-<li>删除服务<ul>
-<li>redis-server –service-uninstall</li>
-</ul>
-</li>
-<li>开启服务 <ul>
-<li>redis-server –service-start</li>
-</ul>
-</li>
-<li>停止服务<ul>
-<li>redis-server –service-stop</li>
-</ul>
-</li>
-</ul>
-<h2 id="4、创建多个Redis实例"><a href="#4、创建多个Redis实例" class="headerlink" title="4、创建多个Redis实例"></a>4、创建多个Redis实例</h2><h3 id="4-1：复制一份redis-windows-conf-配置文件，改名为-redis-windows10001-conf"><a href="#4-1：复制一份redis-windows-conf-配置文件，改名为-redis-windows10001-conf" class="headerlink" title="4.1：复制一份redis.windows.conf 配置文件，改名为 redis.windows10001.conf"></a>4.1：复制一份redis.windows.conf 配置文件，改名为 redis.windows10001.conf</h3><blockquote>
-<p><img src="858580-20171012122412371-1940531396.png"></p>
-</blockquote>
-<h3 id="4-2：更改-redis-windows10001-conf-配置文件的信息"><a href="#4-2：更改-redis-windows10001-conf-配置文件的信息" class="headerlink" title="4.2：更改 redis.windows10001.conf 配置文件的信息"></a>4.2：更改 redis.windows10001.conf 配置文件的信息</h3><blockquote>
-<p>端口号 port 为 10001</p>
-<p>其他先不作说明</p>
-</blockquote>
-<h3 id="4-3：注册为windows服务"><a href="#4-3：注册为windows服务" class="headerlink" title="4.3：注册为windows服务"></a>4.3：注册为windows服务</h3><ul>
-<li><p>redis-server.exe –service-install redis.windows10001.conf –service-name redis10001 –port 10001</p>
+<p>此时 C:\Users\用户名.ssh 下会多出两个文件 id_rsa 和 id_rsa.pub</p>
+<p>id_rsa 是私钥</p>
+<p>id_rsa.pub 是公钥</p>
 <blockquote>
-<p><img src="858580-20171012123203434-1905733346.png"></p>
+<p><img src="202205121443.png"></p>
 </blockquote>
-</li>
-<li><p>从windows服务中可以看到，有两个redis服务，刚才注册的是redis10001，服务还未开启，如下图所示：</p>
+<h2 id="⑤-服务器端-Git-打开-RSA-认证"><a href="#⑤-服务器端-Git-打开-RSA-认证" class="headerlink" title="⑤ 服务器端 Git 打开 RSA 认证"></a>⑤ 服务器端 Git 打开 RSA 认证</h2><p>进入 /etc/ssh 目录，编辑 sshd_config，打开以下三个配置的注释：</p>
+<pre class=" language-shell"><code class="language-shell">RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+</code></pre>
+<p>保存并重启 sshd 服务：</p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost ssh]# systemctl restart sshd
+</code></pre>
+<p>由 AuthorizedKeysFile 得知公钥的存放路径是 .ssh/authorized_keys，实际上是$Home/.ssh/authorized_keys，由于管理 Git 服务的用户是 git，所以实际存放公钥的路径是 /home/git/.ssh/authorized_keys</p>
+<p>在 /home/git/ 下创建目录 .ssh</p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost git]# pwd
+/home/git
+[root@localhost git]# mkdir .ssh
+[root@localhost git]# ls -a 
+. .. .bash_logout .bash_profile .bashrc .gnome2 .mozilla .ssh
+</code></pre>
+<p>然后把 .ssh 文件夹的 owner 修改为 git</p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost git]# chown -R git:git .ssh
+[root@localhost git]# ll -a
+总用量 32
+drwx------. 5 git  git  4096 8月  28 20:04 .
+drwxr-xr-x. 8 root root 4096 8月  28 19:32 ..
+-rw-r--r--. 1 git  git    18 10月 16 2014 .bash_logout
+-rw-r--r--. 1 git  git   176 10月 16 2014 .bash_profile
+-rw-r--r--. 1 git  git   124 10月 16 2014 .bashrc
+drwxr-xr-x. 2 git  git  4096 11月 12 2010 .gnome2
+drwxr-xr-x. 4 git  git  4096 5月   8 12:22 .mozilla
+drwxr-xr-x. 2 git  git  4096 8月  28 20:08 .ssh
+</code></pre>
+<h2 id="⑥-将客户端公钥导入服务器端-home-git-ssh-authorized-keys-文件"><a href="#⑥-将客户端公钥导入服务器端-home-git-ssh-authorized-keys-文件" class="headerlink" title="⑥ 将客户端公钥导入服务器端 /home/git/.ssh/authorized_keys 文件"></a>⑥ 将客户端公钥导入服务器端 /home/git/.ssh/authorized_keys 文件</h2><p>将客户端的公钥上传到liunx服务器</p>
 <blockquote>
-<p><img src="858580-20171012123240059-1708003071.png"></p>
+<p><img src="202205121450.png"></p>
 </blockquote>
-</li>
-</ul>
+<p>回到服务器端，查看 .ssh 下是否存在 authorized_keys 文件，没有的话手动创建【touch authorized_keys】</p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost git]# cd .ssh
+[root@localhost .ssh]# ll
+总用量 4
+-rw-rw-r--. 1 git git 398 8月  28 20:08 authorized_keys
+</code></pre>
+<p>将tmp目录下的公钥追加到/home/git/.ssh/authorized_keys中</p>
+<pre class=" language-shell"><code class="language-shell">cat /tmp/id_rsa.pub >> /home/git/.ssh/authorized_keys
+</code></pre>
+<p><font style="color:red;">如果需要管理多人的权限，就多人的公钥以此种方式追加到/home/git/.ssh/authorized_keys文件里面就行了</font></p>
+<p><strong>重要：</strong></p>
+<p><strong>修改 .ssh 目录的权限为 700</strong></p>
+<p><strong>修改 .ssh/authorized_keys 文件的权限为 600</strong></p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost git]# chmod 700 .ssh
+[root@localhost git]# cd .ssh
+[root@localhost .ssh]# chmod 600 authorized_keys 
+</code></pre>
+<h2 id="⑦-客户端再次-clone-远程仓库"><a href="#⑦-客户端再次-clone-远程仓库" class="headerlink" title="⑦ 客户端再次 clone 远程仓库"></a>⑦ 客户端再次 clone 远程仓库</h2><pre class=" language-shell"><code class="language-shell">$ git clone git@192.168.56.101:/home/data/git/gittest.git
+</code></pre>
+<blockquote>
+<p><img src="202205121457.png"></p>
+</blockquote>
+<p>查看客户端项目目录：</p>
+<blockquote>
+<p><img src="202205121500.png"></p>
+</blockquote>
+<p>也可以使用 tortoiseGit 客户端来管理项目：</p>
+<blockquote>
+<p><img src="202205121501.png"></p>
+</blockquote>
+<p>clone</p>
+<blockquote>
+<p><img src="202205121502.png"></p>
+</blockquote>
+<h2 id="⑧-禁止-git-用户-ssh-登录服务器"><a href="#⑧-禁止-git-用户-ssh-登录服务器" class="headerlink" title="⑧ 禁止 git 用户 ssh 登录服务器"></a>⑧ 禁止 git 用户 ssh 登录服务器</h2><p>之前在服务器端创建的 git 用户不允许 ssh 登录服务器</p>
+<p>编辑 /etc/passwd</p>
+<p>找到：</p>
+<pre class=" language-shell"><code class="language-shell">git:x:502:504::/home/git:/bin/bash
+</code></pre>
+<p>修改为</p>
+<pre class=" language-shell"><code class="language-shell">git:x:502:504::/home/git:/bin/git-shell
+</code></pre>
+<p>此时 git 用户可以正常通过 ssh 使用 git，但无法通过 ssh 登录系统。</p>
+<h1 id="git-bash下中文乱码解决办法："><a href="#git-bash下中文乱码解决办法：" class="headerlink" title="git bash下中文乱码解决办法："></a>git bash下中文乱码解决办法：</h1><p>一.解决办法1：(直接上图)</p>
+<p>1.在git bash下，右键出现下图，选择options：</p>
+<blockquote>
+<p><img src="202205121504.png"></p>
+</blockquote>
+<p>2.选择”Text”</p>
+<blockquote>
+<p><img src="202205121505.png"></p>
+</blockquote>
+<p>3.将”Character set”设置为 UTF-8</p>
+<blockquote>
+<p><img src=""></p>
+</blockquote>
+<h2 id="另外一种解决方法："><a href="#另外一种解决方法：" class="headerlink" title="另外一种解决方法："></a>另外一种解决方法：</h2><p>git命令行执行以下命令：</p>
+<pre class=" language-shell"><code class="language-shell">$ git config --global core.quotepath false
+$ echo $LANG
+$ export LANG="zh_CN.UTF-8"
+</code></pre>
+<p> 3行命令执行完，可以正常显示中文了。</p>
 
                 
             </div>
@@ -542,7 +638,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://beckliang.github.io/2021/11/11/Windows%E4%B8%8B%E5%B0%86Redis%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/">https://beckliang.github.io/2021/11/11/Windows%E4%B8%8B%E5%B0%86Redis%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/</a>
+                    <a href="https://beckliang.github.io/2022/05/12/Centos%E6%90%AD%E5%BB%BAgit%E6%9C%8D%E5%8A%A1%E5%99%A8/">https://beckliang.github.io/2022/05/12/Centos%E6%90%AD%E5%BB%BAgit%E6%9C%8D%E5%8A%A1%E5%99%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -580,12 +676,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/windows/">
-                                    <span class="chip bg-color">windows</span>
-                                </a>
-                            
-                                <a href="/tags/redis/">
-                                    <span class="chip bg-color">redis</span>
+                                <a href="/tags/centos/">
+                                    <span class="chip bg-color">centos</span>
                                 </a>
                             
                         </div>
@@ -754,49 +846,47 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/23/%E4%BD%BF%E7%94%A8nacos%E4%BD%9C%E4%B8%BA%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/">
+                <a href="/2022/05/12/Centos%E6%90%AD%E5%BB%BAgit%E6%9C%8D%E5%8A%A1%E5%99%A8/">
                     <div class="card-image">
                         
-                        <img src="/images/nacos.png" class="responsive-img" alt="使用nacos作为配置中心">
+                        <img src="/images/git.jpg" class="responsive-img" alt="Centos搭建git服务器">
                         
-                        <span class="card-title">使用nacos作为配置中心</span>
+                        <span class="card-title">Centos搭建git服务器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            nacos既可以作为服务注册和发现，也可以作为配置中心。使用nacos整合springcloud作为配置中心的关键配置信息如文中所述
+                            Git（读音为/gɪt/）是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。也是Linus Torvalds为了帮助管理Linux内核开发而开发的一个开放源码的版本控制软件
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-23
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/nacos/" class="post-category">
-                                    nacos
+                            <a href="/categories/git/" class="post-category">
+                                    git
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/springCloud/">
-                        <span class="chip bg-color">springCloud</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
-                        <span class="chip bg-color">微服务</span>
+                    <a href="/tags/centos/">
+                        <span class="chip bg-color">centos</span>
                     </a>
                     
                 </div>
@@ -810,30 +900,34 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/11/10/Windows%E7%B3%BB%E7%BB%9F%E4%B8%8BMySQL-mysql-8-0-12%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
+                <a href="/2022/01/09/Docker-%E5%AE%89%E8%A3%85ElasticSearch/">
                     <div class="card-image">
                         
-                        <img src="/images/mysql.jpg" class="responsive-img" alt="Windows系统下MySQL-mysql 8.0.12安装教程">
+                        <img src="/images/es.jpg" class="responsive-img" alt="Docker 安装ElasticSearch">
                         
-                        <span class="card-title">Windows系统下MySQL-mysql 8.0.12安装教程</span>
+                        <span class="card-title">Docker 安装ElasticSearch</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            在我们学习开发服务端的过程中，我们需要去操作数据库，去存储数据，下文叫你如何安装mysql数据库
+                            Elasticsearch是一个用Java开发的，开源的内存数据库，最开始是包含在Apache Lucene库中。Elastic 是 Lucene 的封装，提供了 REST API 的操作接口，开箱即用。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/MySQL/" class="post-category">
-                                    MySQL
+                            <a href="/categories/ElasticSearch/" class="post-category">
+                                    ElasticSearch
+                                </a>
+                            
+                            <a href="/categories/ElasticSearch/docker/" class="post-category">
+                                    docker
                                 </a>
                             
                             
@@ -843,12 +937,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/windows/">
-                        <span class="chip bg-color">windows</span>
+                    <a href="/tags/centos/">
+                        <span class="chip bg-color">centos</span>
                     </a>
                     
-                    <a href="/tags/mysql/">
-                        <span class="chip bg-color">mysql</span>
+                    <a href="/tags/ElasticSearch/">
+                        <span class="chip bg-color">ElasticSearch</span>
                     </a>
                     
                 </div>
