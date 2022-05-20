@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Docke安装配置Nginx并启动</title>
+      <link href="/2022/05/21/Docke%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENginx%E5%B9%B6%E5%90%AF%E5%8A%A8/"/>
+      <url>/2022/05/21/Docke%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENginx%E5%B9%B6%E5%90%AF%E5%8A%A8/</url>
+      
+        <content type="html"><![CDATA[<p><strong>1、下载镜像文件</strong></p><pre class=" language-shell"><code class="language-shell">docker pull nginx</code></pre><p>**2、随便启动一个 nginx 实例，只是为了复制出配置 ** </p><pre><code>docker run -p 80:80 --name nginx -d nginx:1.10</code></pre><p><strong>3、将容器内的配置文件拷贝到当前目录</strong></p><pre class=" language-shell"><code class="language-shell">docker container cp nginx:/etc/nginx . </code></pre><blockquote><p>别忘了后面的点</p></blockquote><p><strong>4、修改文件名称：mv nginx conf 把这个 conf 移动到/mydata/nginx 下</strong></p><blockquote><p><img src="20220521014146.png"></p></blockquote><p><strong>5、终止原容器</strong></p><pre><code>docker stop nginx</code></pre><p><strong>6、执行命令删除原容器</strong></p><pre class=" language-shell"><code class="language-shell">docker rm $ContainerId（容器的ID)</code></pre><p><strong>7、创建新的 nginx</strong></p><pre class=" language-shell"><code class="language-shell">docker run -p 80:80 --name nginx \-v /mydata/nginx/html:/usr/share/nginx/html \-v /mydata/nginx/logs:/var/log/nginx \-v /mydata/nginx/conf:/etc/nginx \-d nginx:1.10</code></pre><blockquote><p><img src="20220521014451.png"></p></blockquote><p><strong>8、给 nginx 的 html 下面放的所有资源可以直接访问</strong></p><blockquote><p><img src="20220521014722.png"></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> Nginx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> Nginx </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker安装redis</title>
       <link href="/2022/05/21/Docker%E5%AE%89%E8%A3%85redis/"/>
       <url>/2022/05/21/Docker%E5%AE%89%E8%A3%85redis/</url>
