@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="使用nacos作为配置中心, 博客">
-    <meta name="description" content="nacos既可以作为服务注册和发现，也可以作为配置中心。使用nacos整合springcloud作为配置中心的关键配置信息如文中所述">
+    <meta name="keywords" content="Docker安装redis, 博客">
+    <meta name="description" content="Docker容器可以为应用创建一个独立的镜像，当然redis也是可以的Docker容器内部文件系统与外部非直接关联因此在redis安装以及启动过程中需要建立文件系统目录映射。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>使用nacos作为配置中心 | 博客</title>
+    <title>Docker安装redis | 博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -246,12 +246,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/images/nacos.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">使用nacos作为配置中心</h1>
+                    <h1 class="description center-align post-title">Docker安装redis</h1>
                 </div>
             </div>
         </div>
@@ -367,12 +367,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/springCloud/">
-                                <span class="chip bg-color">springCloud</span>
+                            <a href="/tags/docker/">
+                                <span class="chip bg-color">docker</span>
                             </a>
                         
-                            <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
-                                <span class="chip bg-color">微服务</span>
+                            <a href="/tags/redis/">
+                                <span class="chip bg-color">redis</span>
                             </a>
                         
                     </div>
@@ -383,8 +383,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/nacos/" class="post-category">
-                                nacos
+                            <a href="/categories/Redis/" class="post-category">
+                                Redis
                             </a>
                         
                     </div>
@@ -396,28 +396,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-23
+                    2022-05-21
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-05
+                    2022-05-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    864
+                    154
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    1 分
                 </div>
                 
 
@@ -437,91 +437,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1、如何使用nacos作为配置中心统一管理配置"><a href="#1、如何使用nacos作为配置中心统一管理配置" class="headerlink" title="1、如何使用nacos作为配置中心统一管理配置"></a>1、如何使用nacos作为配置中心统一管理配置</h2><h3 id="1-POM引入依赖"><a href="#1-POM引入依赖" class="headerlink" title="(1)POM引入依赖"></a>(1)POM引入依赖</h3><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-alibaba-nacos-config<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-</code></pre>
-<h3 id="2-创建一个bootstrap-properties文件"><a href="#2-创建一个bootstrap-properties文件" class="headerlink" title="(2)创建一个bootstrap.properties文件"></a>(2)创建一个bootstrap.properties文件</h3><pre class=" language-properties"><code class="language-properties"><span class="token attr-name">spring.application.name</span><span class="token punctuation">=</span><span class="token attr-value">gull-coupon</span>
-<span class="token attr-name">spring.cloud.nacos.config.server-addr</span><span class="token punctuation">=</span><span class="token attr-value">192.168.2.160:8848</span>
+                <p><strong>1</strong>、下载镜像文件</p>
+<pre class=" language-shell"><code class="language-shell">docker pull redis
 </code></pre>
 <blockquote>
-<p><img src="20211123234113.png"></p>
+<p><img src="20220521010011.png"></p>
 </blockquote>
-<h3 id="3-需要给配置中心默认添加一个叫-数据集（Dara-Id-gull-coupon-properties。默认规则，应用名-properties"><a href="#3-需要给配置中心默认添加一个叫-数据集（Dara-Id-gull-coupon-properties。默认规则，应用名-properties" class="headerlink" title="(3)需要给配置中心默认添加一个叫 数据集（Dara Id) gull-coupon.properties。默认规则，应用名.properties"></a>(3)需要给配置中心默认添加一个叫 数据集（Dara Id) gull-coupon.properties。默认规则，应用名.properties</h3><blockquote>
-<p><img src="20211123234353.png"></p>
-</blockquote>
-<h3 id="4-给-应用名-properties-添加任何配置"><a href="#4-给-应用名-properties-添加任何配置" class="headerlink" title="(4)给  应用名.properties 添加任何配置"></a>(4)给  应用名.properties 添加任何配置</h3><blockquote>
-<p><img src="20211123234353.png"></p>
-</blockquote>
-<h3 id="5-动态获取配置"><a href="#5-动态获取配置" class="headerlink" title="(5)动态获取配置"></a>(5)动态获取配置</h3><pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RefreshScope</span>：动态获取并刷新配置
-<span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span>"$<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>配置项的名<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span>：获取到配置
+<p><strong>2</strong>、创建实例并启动</p>
+<p>（1）、在主机创建文件件</p>
+<pre class=" language-shell"><code class="language-shell">mkdir -p /mydata/redis/conf
 </code></pre>
-<p><font color="red"><em><strong>注意：</strong></em></font>如果配置中心和当前应用的配置文件中都配置了相同的项，优先使用配置中心的配置</p>
-<blockquote>
-<p><img src="20211123234731.png"></p>
-</blockquote>
-<h2 id="2、细节"><a href="#2、细节" class="headerlink" title="2、细节"></a>2、细节</h2><h3 id="1-命名空间"><a href="#1-命名空间" class="headerlink" title="(1)命名空间"></a>(1)命名空间</h3><blockquote>
-<p>用于进行租户粒度的配置隔离。不同的命名空间下，可以存在相同的 <strong>Group</strong> 或 <strong>Data ID</strong> 的</p>
-<p>配置。<strong>Namespace</strong> 的常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生</p>
-<p>产环境的资源（如配置、服务）隔离等。</p>
-</blockquote>
-<ul>
-<li><p>默认：public（保留空间），默认新增的所有配置都在public空间</p>
-<ol>
-<li><p>利用命名空间来做环境隔离：开发、测试、生产</p>
-<p><font color="red"><em><strong>注意：</strong></em></font>在bootstrap.properties配置上，需要使用哪个命名空间下的配置</p>
-<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">spring.cloud.nacos.config.namespace</span><span class="token punctuation">=</span><span class="token attr-value">61cf105d-36a7-494b-b552-42112bfdd2f4</span>
+<p>（2）、接着新建redis的在宿主机磁盘的配置文件</p>
+<pre class=" language-shell"><code class="language-shell">touch /mydata/redis/conf/redis.conf
 </code></pre>
-</li>
-</ol>
-<blockquote>
-<p><img src="20211124000327.png"></p>
-</blockquote>
-<pre><code> 2. 每一个微服务之间互相隔离配置，每一个微服务都创建自己的命名空间，只加载自己命名空间下的配置。
+<p>（3）、创建实例并启动</p>
+<pre class=" language-shell"><code class="language-shell">docker run -p 6379:6379 --name redis -v /mydata/redis/data:/data \
+
+-v /mydata/redis/conf/redis.conf:/etc/redis/redis.conf \
+
+-d redis redis-server /etc/redis/redis.conf
 </code></pre>
-</li>
-</ul>
-<h3 id="2-配置集"><a href="#2-配置集" class="headerlink" title="(2)配置集"></a>(2)配置集</h3><blockquote>
-<p>一组相关或者不相关的配置项的集合称为配置集。在系统中，一个配置文件通常就是一个配</p>
-<p>置集，包含了系统各个方面的配置。例如，一个配置集可能包含了数据源、线程池、日志级</p>
-<p>别等配置项。</p>
-</blockquote>
-<h3 id="3-配置集ID-类似文件名"><a href="#3-配置集ID-类似文件名" class="headerlink" title="(3)配置集ID(类似文件名)"></a>(3)配置集ID(类似文件名)</h3><blockquote>
-<p>Nacos 中的某个配置集的 ID。配置集 ID 是组织划分配置的维度之一。<strong>Data ID</strong> 通常用于组</p>
-<p>织划分系统的配置集。一个系统或者应用可以包含多个配置集，每个配置集都可以被一个有</p>
-<p>意义的名称标识。Data ID 通常采用类 Java 包（如 com.taobao.tc.refund.log.level）的命名</p>
-<p>规则保证全局唯一性。此命名规则非强制。 </p>
-</blockquote>
-<ul>
-<li>Data ID:类似文件名</li>
-</ul>
-<h3 id="4-配置分组"><a href="#4-配置分组" class="headerlink" title="(4) 配置分组"></a>(4) 配置分组</h3><blockquote>
-<p>Nacos 中的一组配置集，是组织配置的维度之一。通过一个有意义的字符串（如 Buy 或</p>
-<p>Trade ）对配置集进行分组，从而区分 Data ID 相同的配置集。当您在 Nacos 上创建一个</p>
-<p>配置时，如果未填写配置分组的名称，则配置分组的名称默认采用 DEFAULT_GROUP 。配置</p>
-<p>分组的常见场景：不同的应用或组件使用了相同的配置类型，如 database_url 配置和</p>
-<p>MQ_topic 配置。</p>
-</blockquote>
-<ul>
-<li>默认所有的配置集都属于：DEFAULT_GROUP</li>
-</ul>
-<p><em><strong>项目中的使用：每个微服务创建自己的命名空间，使用配置分组区分环境，dev、test、prod</strong></em></p>
-<h2 id="3、同时加载多个配置"><a href="#3、同时加载多个配置" class="headerlink" title="3、同时加载多个配置"></a>3、同时加载多个配置</h2><ul>
-<li>微服务任何配置信息，任何配置文件都可以放在配置中心中</li>
-</ul>
 <blockquote>
-<p><img src="20211124230138.png"></p>
+<p>参数说明</p>
+<p>-p 6379:6379 ：将容器的 6379 端口映射到主机的 6379 端口</p>
+<p>-v /mydata/redis/conf/redis.conf:/etc/redis/redis.conf：将配置文件夹挂载到主机</p>
+<p>-v /mydata/redis/data:/data：将配置文件夹挂载到主机</p>
+<p><img src="20220521010837.png"></p>
 </blockquote>
-<ul>
-<li>只需要在bootstrap.properties说明加载配置中心中哪些配置文件即可。</li>
-</ul>
-<blockquote>
-<p><img src="20211124230251.png"></p>
-</blockquote>
-<ul>
-<li>使用之前springboot注解@Value、@ConfigurationProperties从配置文件中获取值。配置中心有的优先使用配置中心的值。</li>
-</ul>
 
                 
             </div>
@@ -548,7 +490,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://beckliang.github.io/2021/11/23/%E4%BD%BF%E7%94%A8nacos%E4%BD%9C%E4%B8%BA%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/">https://beckliang.github.io/2021/11/23/%E4%BD%BF%E7%94%A8nacos%E4%BD%9C%E4%B8%BA%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</a>
+                    <a href="https://beckliang.github.io/2022/05/21/Docker%E5%AE%89%E8%A3%85redis/">https://beckliang.github.io/2022/05/21/Docker%E5%AE%89%E8%A3%85redis/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -586,12 +528,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/springCloud/">
-                                    <span class="chip bg-color">springCloud</span>
+                                <a href="/tags/docker/">
+                                    <span class="chip bg-color">docker</span>
                                 </a>
                             
-                                <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
-                                    <span class="chip bg-color">微服务</span>
+                                <a href="/tags/redis/">
+                                    <span class="chip bg-color">redis</span>
                                 </a>
                             
                         </div>
@@ -760,75 +702,29 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/27/Centos7%E5%AE%89%E8%A3%85Docker/">
+                <a href="/2022/05/21/Docker%E5%AE%89%E8%A3%85redis/">
                     <div class="card-image">
                         
-                        <img src="/images/docker.jpg" class="responsive-img" alt="Centos7安装docker">
                         
-                        <span class="card-title">Centos7安装docker</span>
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Docker安装redis">
+                        
+                        <span class="card-title">Docker安装redis</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Docker是一个开源工具，它可以让创建和管理 Linux 容器变得简单，容器就像是轻量级的虚拟机，并且可以以毫秒级的速度来启动或停止。
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-27
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/docker/" class="post-category">
-                                    docker
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/centos/">
-                        <span class="chip bg-color">centos</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/11/11/Windows%E4%B8%8B%E5%B0%86Redis%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1/">
-                    <div class="card-image">
-                        
-                        <img src="/images/redis.jpg" class="responsive-img" alt="Windows下将Redis注册为本地服务">
-                        
-                        <span class="card-title">Windows下将Redis注册为本地服务</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Redis是有名的NoSql数据库，一般Linux都会默认支持。但在Windows环境中，可能需要手动安装设置才能有效使用。这里就简单介绍一下Windows下Redis服务的安装方法
+                            Docker容器可以为应用创建一个独立的镜像，当然redis也是可以的Docker容器内部文件系统与外部非直接关联因此在redis安装以及启动过程中需要建立文件系统目录映射。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-21
                             </span>
                         <span class="publish-author">
                             
@@ -842,15 +738,64 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
+                    </a>
                     
                     <a href="/tags/redis/">
                         <span class="chip bg-color">redis</span>
                     </a>
                     
-                    <a href="/tags/windows/">
-                        <span class="chip bg-color">windows</span>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/05/12/Centos%E6%90%AD%E5%BB%BAgit%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                    <div class="card-image">
+                        
+                        <img src="/images/git.jpg" class="responsive-img" alt="Centos搭建git服务器">
+                        
+                        <span class="card-title">Centos搭建git服务器</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Git（读音为/gɪt/）是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。也是Linus Torvalds为了帮助管理Linux内核开发而开发的一个开放源码的版本控制软件
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/git/" class="post-category">
+                                    git
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/centos/">
+                        <span class="chip bg-color">centos</span>
                     </a>
                     
                 </div>
