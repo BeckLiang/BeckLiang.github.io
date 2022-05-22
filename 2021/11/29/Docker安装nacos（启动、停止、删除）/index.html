@@ -407,14 +407,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-29
+                    2022-05-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    418
+                    420
                 </div>
                 
 
@@ -460,7 +460,7 @@
 <h2 id="4、启动镜像-官方文档"><a href="#4、启动镜像-官方文档" class="headerlink" title="4、启动镜像 官方文档"></a>4、启动镜像 <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/quick-start-docker.html">官方文档</a></h2><h3 id="4-1、单机版部署"><a href="#4-1、单机版部署" class="headerlink" title="4.1、单机版部署"></a>4.1、单机版部署</h3><ul>
 <li>单机版部署很多简单，直接一条命令即可完成，通过 <code>MODE</code> 来设置使用单机模式；注意如果是多网卡的话需要配置NACOS_SERVER_IP参数来指定IP，否则可能会导致外网无法访问；</li>
 </ul>
-<pre class=" language-shell"><code class="language-shell">docker run --env MODE=standalone --name nacos -d -p 192.168.56.110:8848:8848 nacos/nacos-server
+<pre class=" language-shell"><code class="language-shell">docker run --env MODE=standalone --restart=always --name nacos -d -p 192.168.56.110:8848:8848 nacos/nacos-server
 </code></pre>
 <ul>
 <li>启动成功后访问<code>http://192.168.56.110:8848/nacos/index.html</code> 即可，默认是账号和密码都是nacos。</li>
@@ -1047,7 +1047,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.6k</span>
+                        class="white-color">5.7k</span>
             
             
             

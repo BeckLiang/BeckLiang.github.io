@@ -403,14 +403,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-06
+                    2022-05-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    287
+                    333
                 </div>
                 
 
@@ -439,7 +439,7 @@
             <div id="articleContent">
                 <h2 id="1、下载镜像文件"><a href="#1、下载镜像文件" class="headerlink" title="1、下载镜像文件"></a>1、下载镜像文件</h2><pre class=" language-shell"><code class="language-shell">docker pull mysql:5.7
 </code></pre>
-<h2 id="2、创建实例并启动"><a href="#2、创建实例并启动" class="headerlink" title="2、创建实例并启动"></a>2、创建实例并启动</h2><h3 id="2-1、创建启动"><a href="#2-1、创建启动" class="headerlink" title="2.1、创建启动"></a>2.1、创建启动</h3><pre class=" language-shell"><code class="language-shell">docker run -p 3306:3306 --name mysql \
+<h2 id="2、创建实例并启动"><a href="#2、创建实例并启动" class="headerlink" title="2、创建实例并启动"></a>2、创建实例并启动</h2><h3 id="2-1、创建启动-docker启动时自启动"><a href="#2-1、创建启动-docker启动时自启动" class="headerlink" title="2.1、创建启动(docker启动时自启动)"></a>2.1、创建启动(docker启动时自启动)</h3><pre class=" language-shell"><code class="language-shell">docker run -p 3306:3306 --restart=always --name mysql \
 -v /mydata/mysql/log:/var/log/mysql \
 -v /mydata/mysql/data:/var/lib/mysql \
 -v /mydata/mysql/conf:/etc/mysql \
@@ -447,7 +447,7 @@
 -d mysql:5.7
 </code></pre>
 <blockquote>
-<p>参数说明:<br> -p 3306:3306：将容器的 3306 端口映射到主机的 3306 端口<br> -v /mydata/mysql/conf:/etc/mysql：将配置文件夹挂载到主机<br> -v /mydata/mysql/log:/var/log/mysql：将日志文件夹挂载到主机<br> -v /mydata/mysql/data:/var/lib/mysql/：将配置文件夹挂载到主机<br> -e MYSQL_ROOT_PASSWORD=root：初始化 root 用户的密码</p>
+<p>参数说明:<br>-p 3306:3306：将容器的 3306 端口映射到主机的 3306 端口<br>–restart=always：docker启动时容器自启动；如果已经启动了容器可以使用命令：docker update –restart=always 容器名或容器ID<br>-v /mydata/mysql/conf:/etc/mysql：将配置文件夹挂载到主机<br>-v /mydata/mysql/log:/var/log/mysql：将日志文件夹挂载到主机<br>-v /mydata/mysql/data:/var/lib/mysql/：将配置文件夹挂载到主机<br>-e MYSQL_ROOT_PASSWORD=root：初始化 root 用户的密码</p>
 </blockquote>
 <h3 id="2-3、MySQL配置"><a href="#2-3、MySQL配置" class="headerlink" title="2.3、MySQL配置"></a>2.3、MySQL配置</h3><pre class=" language-shell"><code class="language-shell">vi /mydata/mysql/conf/my.cnf
 </code></pre>
@@ -1001,7 +1001,7 @@ flush privileges;
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.6k</span>
+                        class="white-color">5.7k</span>
             
             
             

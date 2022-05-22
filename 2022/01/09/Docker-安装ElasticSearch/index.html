@@ -407,14 +407,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-01-10
+                    2022-05-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    367
+                    369
                 </div>
                 
 
@@ -488,7 +488,7 @@
 <p>-e ES_JAVA_OPTS=”-Xms64m -Xmx256m” \ 测试环境下，设置 ES 的初始内存和最大内存，否则导</p>
 <p>致过大启动不了 ES；-v参数：将ElasticSearch中的配置、数据等挂载到外部（自己创建的文件夹中）;</p>
 <p>-d参数：启动docker镜像</p>
-<pre class=" language-shell"><code class="language-shell">docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+<pre class=" language-shell"><code class="language-shell">docker run --name elasticsearch --restart=always -p 9200:9200 -p 9300:9300 \
 -e "discovery.type=single-node" \
 -e ES_JAVA_OPTS="-Xms64m -Xmx512m" \
 -v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
@@ -1061,7 +1061,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.6k</span>
+                        class="white-color">5.7k</span>
             
             
             

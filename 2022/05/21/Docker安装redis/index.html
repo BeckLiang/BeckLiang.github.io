@@ -403,14 +403,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-21
+                    2022-05-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    154
+                    196
                 </div>
                 
 
@@ -450,8 +450,8 @@
 <p>（2）、接着新建redis的在宿主机磁盘的配置文件</p>
 <pre class=" language-shell"><code class="language-shell">touch /mydata/redis/conf/redis.conf
 </code></pre>
-<p>（3）、创建实例并启动</p>
-<pre class=" language-shell"><code class="language-shell">docker run -p 6379:6379 --name redis -v /mydata/redis/data:/data \
+<p>（3）、创建实例并启动（自启动）</p>
+<pre class=" language-shell"><code class="language-shell">docker run -p 6379:6379 --restart=always --name redis -v /mydata/redis/data:/data \
 
 -v /mydata/redis/conf/redis.conf:/etc/redis/redis.conf \
 
@@ -459,6 +459,7 @@
 </code></pre>
 <blockquote>
 <p>参数说明</p>
+<p>–restart=always：docker启动时容器自启动；如果已经启动了容器可以使用命令：docker update –restart=always 容器名或容器ID</p>
 <p>-p 6379:6379 ：将容器的 6379 端口映射到主机的 6379 端口</p>
 <p>-v /mydata/redis/conf/redis.conf:/etc/redis/redis.conf：将配置文件夹挂载到主机</p>
 <p>-v /mydata/redis/data:/data：将配置文件夹挂载到主机</p>
@@ -997,7 +998,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.6k</span>
+                        class="white-color">5.7k</span>
             
             
             
