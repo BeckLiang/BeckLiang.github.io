@@ -682,7 +682,7 @@ docker rm nacostest
 -e TIME_ZONE='Asia/Shanghai' \
 -v /myData/nacos/logs:/home/nacos/logs \
 -v /myData/nacos/conf:/home/nacos/conf \
--p 8848:8848 \
+-p 192.168.2.160:8848:8848 \
 --name nacos \
 --restart=always \
 nacos/nacos-server:latest
