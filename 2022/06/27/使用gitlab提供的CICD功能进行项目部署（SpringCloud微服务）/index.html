@@ -534,9 +534,16 @@ MAINTAINER   example@qq.com
 COPY $<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;JAR_FILE&amp;#125; app.jar</span>
 ENTRYPOINT <span class="token punctuation">[</span><span class="token string">"java"</span>,<span class="token string">"-Djava.security.egd=file:/dev/./urandom"</span>,<span class="token string">"-jar"</span>,<span class="token string">"/app.jar"</span><span class="token punctuation">]</span>
 </code></pre>
-<p><font style="color:red;">注意：在gitlab中需要分配项目到指定的runner下才能执行cicd功能，并勾选图中的两项，如下图所示：</font></p>
+<p><font style="color:red; font:bold">注意：在gitlab中需要分配项目到指定的runner下才能执行cicd功能，并勾选图中的两项，如下图所示：</font></p>
 <blockquote>
 <p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/2022-06-28_162039.png"></p>
+</blockquote>
+<p><font style="color:red; font:bold">在新建项目时，时常会忘记去给新建的项目分配指定的runner，所以导致新建项目无法执行cicd功能，会出现这样的提示：</font></p>
+<pre class=" language-tex"><code class="language-tex">此作业已阻塞,因为您未分配任何具备这些标签的可用Runner: default
+如下图所示：
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/20230801141902.jpg"></p>
 </blockquote>
 <p><strong>3.结果：</strong><br>最后的结果是我在docker上运行了七个容器，gitlab和gitlab-runner是常驻的，每当项目更新到主干的时候，会将docker里的 web容器stop跟rm，然后重新制作镜像并运行</p>
 <blockquote>
