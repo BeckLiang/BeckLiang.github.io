@@ -360,12 +360,12 @@
 <blockquote>
 <p>docker pull [镜像名]:[镜像标签]</p>
 </blockquote>
-<p>例如拉取禅道开源版12.3.3版本命令如下：</p>
-<pre class=" language-shell"><code class="language-shell">docker pull easysoft/zentao:12.3.3
+<p>例如拉取禅道开源版18.11版本命令如下：</p>
+<pre class=" language-shell"><code class="language-shell">docker pull hub.zentao.net/app/zentao:18.11
 </code></pre>
 <blockquote>
-<p><img src="/2023/08/11/Docker%E5%AE%89%E8%A3%85%E7%A6%85%E9%81%93%E5%B9%B6%E9%85%8D%E7%BD%AEsmtp%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5/20230814154505.png"></p>
-<p><img src="/2023/08/11/Docker%E5%AE%89%E8%A3%85%E7%A6%85%E9%81%93%E5%B9%B6%E9%85%8D%E7%BD%AEsmtp%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5/20230814154600.png"></p>
+<p><img src="/2023/08/11/Docker%E5%AE%89%E8%A3%85%E7%A6%85%E9%81%93%E5%B9%B6%E9%85%8D%E7%BD%AEsmtp%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5/20240325141335.png"></p>
+<p><img src="/2023/08/11/Docker%E5%AE%89%E8%A3%85%E7%A6%85%E9%81%93%E5%B9%B6%E9%85%8D%E7%BD%AEsmtp%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5/20240325141512.png"></p>
 </blockquote>
 <p>禅道版本和镜像tag对应关系如下：</p>
 <table>
@@ -400,13 +400,22 @@
 <p>数据库密码： 容器内置mysql用户名为root,默认密码123456，如果不修改可以不指定该变量，如果想更改密码可以设置 MYSQL_ROOT_PASSWORD变量来更改密码；</p>
 <p>镜像标签：禅道版本。</p>
 <p>在主机上创建挂载文件：</p>
-<pre class=" language-shell"><code class="language-shell">1、/mydata/zentao/mysqldata
-2、/mydata/zentao/zentaopms
+<pre class=" language-shell"><code class="language-shell">mkdir /mydata/zentao/18/data
 </code></pre>
 <p>执行如下命令：</p>
-<pre class=" language-shell"><code class="language-shell">docker run --net=host --restart always --name zentao -p 80:80 -p 3360:3306 -v /mydata/zentao/mysqldata:/var/lib/mysql -v /mydata/zentao/zentaopms:/www/zentaopms -d easysoft/zentao:latest
+<pre class=" language-shell"><code class="language-shell">docker run -itd \
+-v /mydata/zentao/18/data:/data \
+-p 80:80 \
+-e MYSQL_INTERNAL=false \
+-e ZT_MYSQL_HOST=39.123.101.2 \
+-e ZT_MYSQL_PORT=3306 \
+-e ZT_MYSQL_USER=root \
+-e ZT_MYSQL_PASSWORD=root@2022 \
+-e ZT_MYSQL_DB=zentao18 \
+--name zentao \
+hub.zentao.net/app/zentao:18.11
 </code></pre>
-<p>其中 –net&#x3D;host指定禅道使用跟主机一样的ip地址。</p>
+<p>其中 –net&#x3D;host指定禅道使用跟主机一样的ip地址。MySql使用外部服务器进行连接。</p>
 <h4 id="2、查看容器是否启动成功"><a href="#2、查看容器是否启动成功" class="headerlink" title="2、查看容器是否启动成功"></a>2、查看容器是否启动成功</h4><p>执行如下命令查看容器是否启动成功。</p>
 <pre class=" language-shell"><code class="language-shell">docker ps
 </code></pre>
