@@ -350,9 +350,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Docker-安装Mysql5-7"><a href="#Docker-安装Mysql5-7" class="headerlink" title="Docker 安装Mysql5.7"></a><font style="color:red;">Docker 安装Mysql5.7</font></h2><h2 id="1、下载镜像文件"><a href="#1、下载镜像文件" class="headerlink" title="1、下载镜像文件"></a>1、下载镜像文件</h2><pre class=" language-shell"><code class="language-shell">docker pull mysql:5.7
+                <h2 id="Docker-安装Mysql5-7"><a href="#Docker-安装Mysql5-7" class="headerlink" title="Docker 安装Mysql5.7"></a><font style="color:red;">Docker 安装Mysql5.7</font></h2><h2 id="一、下载镜像文件"><a href="#一、下载镜像文件" class="headerlink" title="一、下载镜像文件"></a>一、下载镜像文件</h2><pre class=" language-shell"><code class="language-shell">docker pull mysql:5.7
 </code></pre>
-<h2 id="2、创建实例并启动"><a href="#2、创建实例并启动" class="headerlink" title="2、创建实例并启动"></a>2、创建实例并启动</h2><h3 id="2-1、创建启动-docker启动时自启动"><a href="#2-1、创建启动-docker启动时自启动" class="headerlink" title="2.1、创建启动(docker启动时自启动)"></a>2.1、创建启动(docker启动时自启动)</h3><pre class=" language-shell"><code class="language-shell">docker run -p 3306:3306 --restart=always --name mysql \
+<h2 id="二、创建实例并启动设置mysql"><a href="#二、创建实例并启动设置mysql" class="headerlink" title="二、创建实例并启动设置mysql"></a>二、创建实例并启动设置mysql</h2><h3 id="1、创建启动-docker启动时自启动"><a href="#1、创建启动-docker启动时自启动" class="headerlink" title="1、创建启动(docker启动时自启动)"></a>1、创建启动(docker启动时自启动)</h3><pre class=" language-shell"><code class="language-shell">docker run -p 3306:3306 --restart=always --name mysql \
 -v /mydata/mysql/log:/var/log/mysql \
 -v /mydata/mysql/data:/var/lib/mysql \
 -v /mydata/mysql/conf:/etc/mysql \
@@ -362,7 +362,7 @@
 <blockquote>
 <p>参数说明:<br>-p 3306:3306：将容器的 3306 端口映射到主机的 3306 端口<br>–restart&#x3D;always：docker启动时容器自启动；如果已经启动了容器可以使用命令：docker update –restart&#x3D;always 容器名或容器ID<br>-v &#x2F;mydata&#x2F;mysql&#x2F;conf:&#x2F;etc&#x2F;mysql：将配置文件夹挂载到主机<br>-v &#x2F;mydata&#x2F;mysql&#x2F;log:&#x2F;var&#x2F;log&#x2F;mysql：将日志文件夹挂载到主机<br>-v &#x2F;mydata&#x2F;mysql&#x2F;data:&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;：将配置文件夹挂载到主机<br>-e MYSQL_ROOT_PASSWORD&#x3D;root：初始化 root 用户的密码</p>
 </blockquote>
-<h3 id="2-3、MySQL配置"><a href="#2-3、MySQL配置" class="headerlink" title="2.3、MySQL配置"></a>2.3、MySQL配置</h3><pre class=" language-shell"><code class="language-shell">vi /mydata/mysql/conf/my.cnf
+<h3 id="2、MySQL配置"><a href="#2、MySQL配置" class="headerlink" title="2、MySQL配置"></a>2、MySQL配置</h3><pre class=" language-shell"><code class="language-shell">vi /mydata/mysql/conf/my.cnf
 </code></pre>
 <blockquote>
 <p>[client]<br>default-character-set&#x3D;utf8<br>[mysql]<br>default-character-set&#x3D;utf8<br>[mysqld]<br>init_connect&#x3D;’SET collation_connection &#x3D; utf8_unicode_ci’<br>init_connect&#x3D;’SET NAMES utf8’<br>character-set-server&#x3D;utf8<br>collation-server&#x3D;utf8_unicode_ci<br>skip-character-set-client-handshake<br>skip-name-resolve</p>
@@ -384,12 +384,12 @@ flush privileges;
 </code></pre>
 <h2 id="5、进入容器文件系统"><a href="#5、进入容器文件系统" class="headerlink" title="5、进入容器文件系统"></a>5、进入容器文件系统</h2><pre class=" language-shell"><code class="language-shell">docker exec -it mysql /bin/bash
 </code></pre>
-<h2 id="Docker安装Mysql8-0"><a href="#Docker安装Mysql8-0" class="headerlink" title="Docker安装Mysql8.0+"></a><font style="color:red;">Docker安装Mysql8.0+</font></h2><h3 id="1、下载镜像文件-1"><a href="#1、下载镜像文件-1" class="headerlink" title="1、下载镜像文件"></a>1、下载镜像文件</h3><pre class=" language-bash"><code class="language-bash">docker pull mysql:latest
+<h2 id="Docker安装Mysql8-0"><a href="#Docker安装Mysql8-0" class="headerlink" title="Docker安装Mysql8.0+"></a><font style="color:red;">Docker安装Mysql8.0+</font></h2><h3 id="一、下载镜像文件-1"><a href="#一、下载镜像文件-1" class="headerlink" title="一、下载镜像文件"></a>一、下载镜像文件</h3><pre class=" language-bash"><code class="language-bash">docker pull mysql:latest
 </code></pre>
 <blockquote>
 <p><img src="/2021/11/27/Docker%E5%AE%89%E8%A3%85Mysql/20220613165555.png"></p>
 </blockquote>
-<h3 id="2、创建实例并启动-1"><a href="#2、创建实例并启动-1" class="headerlink" title="2、创建实例并启动"></a>2、创建实例并启动</h3><h3 id="2-1、创建启动-docker启动时自启动-1"><a href="#2-1、创建启动-docker启动时自启动-1" class="headerlink" title="2.1、创建启动(docker启动时自启动)"></a>2.1、创建启动(docker启动时自启动)</h3><pre class=" language-bash"><code class="language-bash">docker run -p 3306:3306 --restart<span class="token operator">=</span>always --name mysql \
+<h3 id="二、创建实例并启动设置mysql-1"><a href="#二、创建实例并启动设置mysql-1" class="headerlink" title="二、创建实例并启动设置mysql"></a>二、创建实例并启动设置mysql</h3><h3 id="1、创建启动-docker启动时自启动-1"><a href="#1、创建启动-docker启动时自启动-1" class="headerlink" title="1、创建启动(docker启动时自启动)"></a>1、创建启动(docker启动时自启动)</h3><pre class=" language-bash"><code class="language-bash">docker run -p 3306:3306 --restart<span class="token operator">=</span>always --name mysql \
 -v /mydata/mysql/log:/var/log/mysql \
 -v /mydata/mysql/data:/var/lib/mysql \
 -v /mydata/mysql/conf:/etc/mysql \
@@ -399,7 +399,7 @@ flush privileges;
 <blockquote>
 <p>参数说明:<br>-p 3306:3306：将容器的 3306 端口映射到主机的 3306 端口<br>–restart&#x3D;always：docker启动时容器自启动；如果已经启动了容器可以使用命令：docker update –restart&#x3D;always 容器名或容器ID<br>-v &#x2F;mydata&#x2F;mysql&#x2F;conf:&#x2F;etc&#x2F;mysql：将配置文件夹挂载到主机<br>-v &#x2F;mydata&#x2F;mysql&#x2F;log:&#x2F;var&#x2F;log&#x2F;mysql：将日志文件夹挂载到主机<br>-v &#x2F;mydata&#x2F;mysql&#x2F;data:&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;：将配置文件夹挂载到主机<br>-e MYSQL_ROOT_PASSWORD&#x3D;root：初始化 root 用户的密码</p>
 </blockquote>
-<h3 id="2-2、MySQL配置-和Mysql5-7版本配置不一样"><a href="#2-2、MySQL配置-和Mysql5-7版本配置不一样" class="headerlink" title="2.2、MySQL配置(和Mysql5.7版本配置不一样)"></a>2.2、MySQL配置(和Mysql5.7版本配置不一样)</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">vi</span> /mydata/mysql/conf/my.cnf
+<h3 id="2、MySQL配置-和Mysql5-7版本配置不一样"><a href="#2、MySQL配置-和Mysql5-7版本配置不一样" class="headerlink" title="2、MySQL配置(和Mysql5.7版本配置不一样)"></a>2、MySQL配置(和Mysql5.7版本配置不一样)</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">vi</span> /mydata/mysql/conf/my.cnf
 </code></pre>
 <blockquote>
 <p>[mysqld]<br>user&#x3D;mysql<br>character-set-server&#x3D;utf8<br>default_authentication_plugin&#x3D;mysql_native_password<br>secure_file_priv&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql<br>expire_logs_days&#x3D;7<br>sql_mode&#x3D;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION<br>max_connections&#x3D;1000</p>
@@ -419,6 +419,41 @@ flush privileges;
 </code></pre>
 <h2 id="5、进入容器文件系统-1"><a href="#5、进入容器文件系统-1" class="headerlink" title="5、进入容器文件系统"></a>5、进入容器文件系统</h2><pre class=" language-shell"><code class="language-shell">docker exec -it mysql /bin/bash
 </code></pre>
+<h2 id="Mysql创建用户并赋权"><a href="#Mysql创建用户并赋权" class="headerlink" title="Mysql创建用户并赋权"></a><font style="color:red;">Mysql创建用户并赋权</font></h2><p>在mysql中，我们可以使用一下命令来创建用户和创建库：</p>
+<h2 id="一、创建用户"><a href="#一、创建用户" class="headerlink" title="一、创建用户"></a>一、创建用户</h2><h3 id="1、创建本地用户"><a href="#1、创建本地用户" class="headerlink" title="1、创建本地用户"></a>1、创建本地用户</h3><pre class=" language-Shell"><code class="language-Shell">CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+</code></pre>
+<blockquote>
+<p>这将在MySQL中创建一个名为’username’的用户，并设置密码为’password’。这个用户只能从本地主机（localhost）进行连接。</p>
+</blockquote>
+<h3 id="2、创建远程用户"><a href="#2、创建远程用户" class="headerlink" title="2、创建远程用户"></a>2、创建远程用户</h3><pre class=" language-Shell"><code class="language-Shell">CREATE USER 'username'@'%' IDENTIFIED BY 'password';
+</code></pre>
+<blockquote>
+<p>这将创建一个名为’username’的用户，并设置密码为’password’。这个用户可以从任何远程主机进行连接。</p>
+</blockquote>
+<h2 id="二、创建数据库"><a href="#二、创建数据库" class="headerlink" title="二、创建数据库"></a>二、创建数据库</h2><pre class=" language-Shell"><code class="language-Shell">CREATE DATABASE dbname;
+</code></pre>
+<blockquote>
+<p>这将在MySQL中创建一个名为’dbname’的数据库。</p>
+</blockquote>
+<h2 id="三、用户授权"><a href="#三、用户授权" class="headerlink" title="三、用户授权"></a>三、用户授权</h2><h3 id="1、授权指定数据库"><a href="#1、授权指定数据库" class="headerlink" title="1、授权指定数据库"></a>1、授权指定数据库</h3><pre class=" language-Shell"><code class="language-Shell">GRANT ALL PRIVILEGES ON dbname.* TO 'username'@'localhost';
+</code></pre>
+<blockquote>
+<p>这将授予’username’用户对’dbname’数据库的所有权限，并限制只能从本地主机进行连接。如果远程访问，则：</p>
+<pre class=" language-Shell"><code class="language-Shell">GRANT ALL PRIVILEGES ON dbname.* TO 'username'@'%';
+</code></pre>
+</blockquote>
+<h3 id="2、授予用户对所有数据库的访问权限"><a href="#2、授予用户对所有数据库的访问权限" class="headerlink" title="2、授予用户对所有数据库的访问权限"></a>2、授予用户对所有数据库的访问权限</h3><pre class=" language-Shell"><code class="language-Shell">GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost';
+</code></pre>
+<blockquote>
+<p>这将授予’username’用户对所有数据库的所有权限，并限制只能从本地主机进行连接。如果远程访问，则：</p>
+<pre class=" language-Shell"><code class="language-Shell">GRANT ALL PRIVILEGES ON *.* TO 'username'@'%';
+</code></pre>
+</blockquote>
+<h2 id="四、刷新权限"><a href="#四、刷新权限" class="headerlink" title="四、刷新权限"></a>四、刷新权限</h2><pre class=" language-Shell"><code class="language-Shell">FLUSH PRIVILEGES;
+</code></pre>
+<blockquote>
+<p>刷新MySQL的权限表，以使新的用户和权限生效。</p>
+</blockquote>
 
                 
             </div>
