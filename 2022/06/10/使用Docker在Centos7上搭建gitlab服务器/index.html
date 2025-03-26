@@ -1,0 +1,1195 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="使用Docker在Centos7上搭建gitlab服务器, 博客">
+    <meta name="description" content="GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的Web服务。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>使用Docker在Centos7上搭建gitlab服务器 | 博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/gitlab.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">使用Docker在Centos7上搭建gitlab服务器</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/centos/">
+                                <span class="chip bg-color">centos</span>
+                            </a>
+                        
+                            <a href="/tags/docker/">
+                                <span class="chip bg-color">docker</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/gitlab/" class="post-category">
+                                gitlab
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-06-10
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h4 id="1、下载镜像文件"><a href="#1、下载镜像文件" class="headerlink" title="1、下载镜像文件"></a>1、下载镜像文件</h4><pre class=" language-shell"><code class="language-shell">docker pull gitlab/gitlab-ce
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610142948.png"></p>
+</blockquote>
+<h4 id="2、创建GitLab-的配置-config-、-日志-logs-、数据-data-放到容器之外，-便于日后升级，-因此请先准备这三个目录"><a href="#2、创建GitLab-的配置-config-、-日志-logs-、数据-data-放到容器之外，-便于日后升级，-因此请先准备这三个目录" class="headerlink" title="2、创建GitLab 的配置 (config) 、 日志 (logs) 、数据 (data) 放到容器之外， 便于日后升级， 因此请先准备这三个目录"></a>2、创建GitLab 的配置 (config) 、 日志 (logs) 、数据 (data) 放到容器之外， 便于日后升级， 因此请先准备这三个目录</h4><pre class=" language-shell"><code class="language-shell">mkdir -p /mydata/gitlab/config
+
+mkdir -p /mydata/gitlab/logs
+
+mkdir -p /mydata/gitlab/data
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610143400.png"></p>
+</blockquote>
+<h4 id="3、运行GitLab容器"><a href="#3、运行GitLab容器" class="headerlink" title="3、运行GitLab容器"></a>3、运行GitLab容器</h4><pre class=" language-shell"><code class="language-shell">docker run -p 80:80 --restart=always --name gitlab \
+-v /mydata/gitlab/config:/etc/gitlab \
+-v /mydata/gitlab/logs:/var/log/gitlab \
+-v /mydata/gitlab/data:/var/opt/gitlab \
+-d gitlab/gitlab-ce:latest  
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610143637.png"></p>
+</blockquote>
+<p>查看<code>/mydata/gitlab/config</code>目录下的文件</p>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610143827.png"></p>
+</blockquote>
+<h4 id="4、修改-mydata-gitlab-config-gitlab-rb"><a href="#4、修改-mydata-gitlab-config-gitlab-rb" class="headerlink" title="4、修改/mydata/gitlab/config/gitlab.rb"></a>4、修改<code>/mydata/gitlab/config/gitlab.rb</code></h4><p>把external_url改成部署机器的域名或者IP地址</p>
+<pre class=" language-shell"><code class="language-shell">vi /mydata/gitlab/config/gitlab.rb
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610144107.png"></p>
+</blockquote>
+<p>按ESC键 <code>:wq</code>保存</p>
+<h4 id="5、修改-mydata-gitlab-data-gitlab-rails-etc-gitlab-yml"><a href="#5、修改-mydata-gitlab-data-gitlab-rails-etc-gitlab-yml" class="headerlink" title="5、修改/mydata/gitlab/data/gitlab-rails/etc/gitlab.yml"></a>5、修改<code>/mydata/gitlab/data/gitlab-rails/etc/gitlab.yml</code></h4><pre class=" language-shell"><code class="language-shell">vi /mydata/gitlab/data/gitlab-rails/etc/gitlab.yml
+</code></pre>
+<p>找到关键字 <em><code>## Web server settings</code></em><br>将host的值改成映射的外部主机ip地址和端口，这里会显示在gitlab克隆地址</p>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610144642.png"></p>
+</blockquote>
+<p>按ESC键 <code>:wq</code>保存</p>
+<blockquote>
+<p>注意：如果不使用默认的80端口，则端口映射不需要内部80端口</p>
+<p>（1）、修改&#x2F;mydata&#x2F;gitlab&#x2F;config下的gitlab.rb</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">vi</span> gitlab.rb
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220627155908.png"></p>
+</blockquote>
+<p>（2）、修改&#x2F;mydata&#x2F;gitlab&#x2F;data&#x2F;gitlab-rails&#x2F;etc下的gitlab.yml</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">vi</span> gitlab.yml
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220627160326.png"></p>
+</blockquote>
+<p>gitlab.rb和gitlab.yml里面的端口需要一致，这样浏览器访问或克隆项目时都会携带端口；如果已经映射了内部的80端口，则只需要把运行的gitlab容器停止、删除，然后重新映射我们指定的端口(8088)运行容器。这样就能正常访问我们的项目了。</p>
+<pre class=" language-bash"><code class="language-bash">docker run -p 8088:8088 -p 8443:443 -p 8022:22 --restart<span class="token operator">=</span>always --name gitlab \
+-v /mydata/gitlab/config:/etc/gitlab \
+-v /mydata/gitlab/logs:/var/log/gitlab \
+-v /mydata/gitlab/data:/var/opt/gitlab \
+-d gitlab/gitlab-ce:latest  
+</code></pre>
+</blockquote>
+<h4 id="6、查看docker状态"><a href="#6、查看docker状态" class="headerlink" title="6、查看docker状态"></a>6、查看<code>docker</code>状态</h4><pre class=" language-shell"><code class="language-shell">docker ps
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610144821.png"></p>
+</blockquote>
+<h4 id="7、停止docker容器"><a href="#7、停止docker容器" class="headerlink" title="7、停止docker容器"></a>7、停止docker容器</h4><pre class=" language-shell"><code class="language-shell">docker stop gitlab
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610145252.png"></p>
+</blockquote>
+<h4 id="8、删除容器"><a href="#8、删除容器" class="headerlink" title="8、删除容器"></a>8、删除容器</h4><pre class=" language-shell"><code class="language-shell">docker rm gitlab
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610145355.png"></p>
+</blockquote>
+<h4 id="9、查看docker状态"><a href="#9、查看docker状态" class="headerlink" title="9、查看docker状态"></a>9、查看docker状态</h4><pre class=" language-shell"><code class="language-shell">docker ps
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610145503.png"></p>
+</blockquote>
+<h4 id="10、重启docker"><a href="#10、重启docker" class="headerlink" title="10、重启docker"></a>10、重启docker</h4><pre class=" language-shell"><code class="language-shell">systemctl restart docker
+</code></pre>
+<h4 id="11、运行GitLab容器"><a href="#11、运行GitLab容器" class="headerlink" title="11、运行GitLab容器"></a>11、运行GitLab容器</h4><pre class=" language-shell"><code class="language-shell">docker run -p 80:80 --restart=always --name gitlab \
+-v /mydata/gitlab/config:/etc/gitlab \
+-v /mydata/gitlab/logs:/var/log/gitlab \
+-v /mydata/gitlab/data:/var/opt/gitlab \
+-d gitlab/gitlab-ce:latest
+</code></pre>
+<h4 id="12、访问Gitlab"><a href="#12、访问Gitlab" class="headerlink" title="12、访问Gitlab"></a>12、访问Gitlab</h4><ul>
+<li>访问地址：<a target="_blank" rel="noopener" href="http://192.168.2.104/">http://192.168.2.104/</a></li>
+<li>由于Gitlab启动比较慢，需要耐心等待10分钟左右，如果Gitlab没有启动完成访问，会出现如下错误。</li>
+</ul>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/1135764-20210117000127250-804445889.png"></p>
+</blockquote>
+<ul>
+<li>可以通过docker命令动态查看容器启动日志来知道gitlab是否已经启动完成</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">docker logs gitlab
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610150410.png"></p>
+</blockquote>
+<p><font style="color:red;">注意：如果在ECS上配置的gitlab端口被占用，更改其他端口时，在阿里云服务器ECS实例中，设置安全组允许你设置的端口访问即可</font></p>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610164436.png"></p>
+</blockquote>
+<h4 id="13、Gitlab的初次使用"><a href="#13、Gitlab的初次使用" class="headerlink" title="13、Gitlab的初次使用"></a>13、Gitlab的初次使用</h4><p>Gitlab启动完成后第一次访问，账号：root，初始密码可以通过指令查看：</p>
+<pre class=" language-shell"><code class="language-shell">docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610151346.png"></p>
+</blockquote>
+<p>也可以通过挂载宿主机器的配置文件查看：</p>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610152000.png"></p>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220610152125.png"></p>
+</blockquote>
+<h4 id="14、ECS搭建gitlab服务器访问中断（慢）的问题"><a href="#14、ECS搭建gitlab服务器访问中断（慢）的问题" class="headerlink" title="14、ECS搭建gitlab服务器访问中断（慢）的问题"></a>14、ECS搭建gitlab服务器访问中断（慢）的问题</h4><p>浏览器访问gitlab的web页面，发现非常慢，并且很容易出现502问题。后来搜了下，原因是gitlab占用内存太多，导致服务器崩溃。尤其是使用阿里云的服务器，最容易出现502，默认情况下，阿里云云主机的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=swap&spm=1001.2101.3001.7020">swap</a>功能是没有启用的，解决办法就是启动swap分区。</p>
+<p>Swap分区在系统的物理内存不够用的时候，把物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到Swap分区中，等到那些程序要运行时，再从Swap分区中恢复保存的数据到内存中。</p>
+<p>阿里云服务器默认swap分区是没启动的，输入free查看,如下显示的都是0</p>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220613100930.png"></p>
+</blockquote>
+<p>也可以通过cat &#x2F;proc&#x2F;swaps查看</p>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220613101012.png"></p>
+</blockquote>
+<h4 id="14-1、创建swap分区4G（-x2F-data-x2F-swap访问不到，后面所有步骤都替换成-x2F-home-x2F-swap）"><a href="#14-1、创建swap分区4G（-x2F-data-x2F-swap访问不到，后面所有步骤都替换成-x2F-home-x2F-swap）" class="headerlink" title="14.1、创建swap分区4G（&#x2F;data&#x2F;swap访问不到，后面所有步骤都替换成&#x2F;home&#x2F;swap）"></a>14.1、创建swap分区4G<strong>（&#x2F;data&#x2F;swap访问不到，后面所有步骤都替换成&#x2F;home&#x2F;swap）</strong></h4><pre class=" language-bash"><code class="language-bash"><span class="token function">dd</span> if<span class="token operator">=</span>/dev/zero of<span class="token operator">=</span>/home/swap bs<span class="token operator">=</span>512 count<span class="token operator">=</span>8388616
+</code></pre>
+<h4 id="14-2、通过mkswap命令将上面新建出的文件做成swap分区"><a href="#14-2、通过mkswap命令将上面新建出的文件做成swap分区" class="headerlink" title="14.2、通过mkswap命令将上面新建出的文件做成swap分区"></a>14.2、通过mkswap命令将上面新建出的文件做成swap分区</h4><p><font style="color:red;"><strong>备注：前面如果用的&#x2F;home&#x2F;swap则下面这条命令也用&#x2F;home&#x2F;swap</strong></font></p>
+<pre class=" language-shell"><code class="language-shell">mkswap /home/swap
+</code></pre>
+<h4 id="14-3、查看内核参数vm-swappiness中的数值是否为0，如果为0则根据实际需要调整成60"><a href="#14-3、查看内核参数vm-swappiness中的数值是否为0，如果为0则根据实际需要调整成60" class="headerlink" title="14.3、查看内核参数vm.swappiness中的数值是否为0，如果为0则根据实际需要调整成60"></a>14.3、查看内核参数vm.swappiness中的数值是否为0，如果为0则根据实际需要调整成60</h4><pre class=" language-bash"><code class="language-bash"><span class="token function">vi</span> /etc/sysctl.conf
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220613103311.png"></p>
+</blockquote>
+<h4 id="14-4、启用分区（注意：前面如果用的-x2F-home-x2F-swap则下面这条命令也用-x2F-home-x2F-swap）"><a href="#14-4、启用分区（注意：前面如果用的-x2F-home-x2F-swap则下面这条命令也用-x2F-home-x2F-swap）" class="headerlink" title="14.4、启用分区（注意：前面如果用的&#x2F;home&#x2F;swap则下面这条命令也用&#x2F;home&#x2F;swap）"></a>14.4、启用分区（<strong>注意：前面如果用的&#x2F;home&#x2F;swap则下面这条命令也用&#x2F;home&#x2F;swap</strong>）</h4><pre class=" language-bash"><code class="language-bash">swapon /home/swap
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220613104252.png"></p>
+</blockquote>
+<h4 id="14-5、修改-x2F-etc-x2F-fstab文件（注意：前面如果用的-x2F-home-x2F-swap则下面这条命令也用-x2F-home-x2F-swap）"><a href="#14-5、修改-x2F-etc-x2F-fstab文件（注意：前面如果用的-x2F-home-x2F-swap则下面这条命令也用-x2F-home-x2F-swap）" class="headerlink" title="14.5、修改&#x2F;etc&#x2F;fstab文件（注意：前面如果用的&#x2F;home&#x2F;swap则下面这条命令也用&#x2F;home&#x2F;swap）"></a>14.5、修改&#x2F;etc&#x2F;fstab文件（注意：前面如果用的&#x2F;home&#x2F;swap则下面这条命令也用&#x2F;home&#x2F;swap）</h4><pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> “/data/swap swap swap defaults 0 0” <span class="token operator">>></span> /etc/fsta
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220613104223.png"></p>
+</blockquote>
+<h4 id="14-6、最后查看swap分区是否成功"><a href="#14-6、最后查看swap分区是否成功" class="headerlink" title="14.6、最后查看swap分区是否成功"></a>14.6、最后查看swap分区是否成功</h4><pre class=" language-bash"><code class="language-bash"><span class="token function">cat</span> /proc/swaps
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/20220613104429.png"></p>
+</blockquote>
+<h4 id="14-7、重启gitlab即可"><a href="#14-7、重启gitlab即可" class="headerlink" title="14.7、重启gitlab即可"></a>14.7、重启gitlab即可</h4>
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Beck Liang</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://beckliang.github.io/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/">https://beckliang.github.io/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Beck Liang</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/centos/">
+                                    <span class="chip bg-color">centos</span>
+                                </a>
+                            
+                                <a href="/tags/docker/">
+                                    <span class="chip bg-color">docker</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/">
+                    <div class="card-image">
+                        
+                        <img src="/images/gitlab.png" class="responsive-img" alt="使用gitlab提供的CICD功能进行项目部署（SpringCloud微服务）">
+                        
+                        <span class="card-title">使用gitlab提供的CICD功能进行项目部署（SpringCloud微服务）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Gitlab CI/CD内置于GitLab，是Gitlab一个简洁好用的的持续集成/持续交付/持续部署的框架，通过gitlab.yml进行自动化配置文件设置。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/gitlab/" class="post-category">
+                                    gitlab
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/centos/">
+                        <span class="chip bg-color">centos</span>
+                    </a>
+                    
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/05/21/Docke%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENginx%E5%B9%B6%E5%90%AF%E5%8A%A8/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Docke安装配置Nginx并启动">
+                        
+                        <span class="card-title">Docke安装配置Nginx并启动</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Docker容器可以为应用创建一个独立的镜像，当然Nginx也是可以的Docker容器内部文件系统与外部非直接关联因此在Nginx安装以及启动过程中需要建立文件系统目录映射。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Nginx/" class="post-category">
+                                    Nginx
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
+                    </a>
+                    
+                    <a href="/tags/Nginx/">
+                        <span class="chip bg-color">Nginx</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2025</span>
+            
+            <a href="/about" target="_blank">Beck Liang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

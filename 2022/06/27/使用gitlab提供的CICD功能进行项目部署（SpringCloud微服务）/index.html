@@ -1,0 +1,1237 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="使用gitlab提供的CICD功能进行项目部署（SpringCloud微服务）, 博客">
+    <meta name="description" content="Gitlab CI/CD内置于GitLab，是Gitlab一个简洁好用的的持续集成/持续交付/持续部署的框架，通过gitlab.yml进行自动化配置文件设置。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>使用gitlab提供的CICD功能进行项目部署（SpringCloud微服务） | 博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">博客</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">博客</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/gitlab.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">使用gitlab提供的CICD功能进行项目部署（SpringCloud微服务）</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/centos/">
+                                <span class="chip bg-color">centos</span>
+                            </a>
+                        
+                            <a href="/tags/docker/">
+                                <span class="chip bg-color">docker</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/gitlab/" class="post-category">
+                                gitlab
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-06-27
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="一、GitLab-Runner-介绍"><a href="#一、GitLab-Runner-介绍" class="headerlink" title="一、GitLab Runner 介绍"></a>一、GitLab Runner 介绍</h3><p>GitLab Runner是一个开源项目，用于运行您的作业并将结果发送回GitLab。它与GitLab CI一起使用，GitLab CI是GitLab随附的开源持续集成服务，用于协调作业。</p>
+<p>GitLab Runner是用Go编写，可以作为单个二进制文件运行，不需要语言特定的要求。</p>
+<h3 id="二、GitLab-Runner的三种类型"><a href="#二、GitLab-Runner的三种类型" class="headerlink" title="二、GitLab Runner的三种类型"></a>二、GitLab Runner的三种类型</h3><p>shared：运行整个平台项目的作业(gitlab)</p>
+<p>group：运行特定group下的所有项目的作业(group)</p>
+<p>specific：运行指定的项目作业(project)</p>
+<h3 id="三、GitLab-Runner两种状态"><a href="#三、GitLab-Runner两种状态" class="headerlink" title="三、GitLab Runner两种状态"></a>三、GitLab Runner两种状态</h3><p>locked：无法运行项目作业</p>
+<p>paused：不会运行作业</p>
+<h3 id="四、GitLab-Runner安装"><a href="#四、GitLab-Runner安装" class="headerlink" title="四、GitLab Runner安装"></a>四、GitLab Runner安装</h3><p>由于目前服务都上容器了，因此这里只演示采用docker安装GitLab Runner的方法，其他的方法可参考官网。</p>
+<p>官网地址：<a href="https://link.zhihu.com/?target=https://docs.gitlab.com/runner/install/">https://docs.gitlab.com/runner/</a></p>
+<pre class=" language-bash"><code class="language-bash">docker run -d --name gitlab-runner --restart always \
+  -v /mydata/gitlab-runner/config:/etc/gitlab-runner \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  gitlab/gitlab-runner:latest
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/20220627185652.png"></p>
+</blockquote>
+<h3 id="五、GitLab-Runner注册"><a href="#五、GitLab-Runner注册" class="headerlink" title="五、GitLab Runner注册"></a>五、GitLab Runner注册</h3><p>注意：注册gitlab-runner的前提是必须有一个可以使用的gitlab仓库</p>
+<p>点击用户管理–左边点击runner，可以看到界面右边有gitlab的地址和token。这个需要用于后面runner的注册使用。这里我们注册一个share类型的runner。</p>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/20220627190022.png"></p>
+</blockquote>
+<p>由于runner是采用docker安装，因此注册的时候需要进入到runner的容器中进行</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost config<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># docker exec -it gitlab-runner bash</span>
+
+root@24dc60abee0b:/<span class="token comment" spellcheck="true"># gitlab-runner register</span>
+Runtime platform                                    arch<span class="token operator">=</span>amd64 os<span class="token operator">=</span>linux pid<span class="token operator">=</span>86 revision<span class="token operator">=</span>775dd39d version<span class="token operator">=</span>13.8.0
+Running <span class="token keyword">in</span> system-mode.                            
+                                                   
+Enter the GitLab instance URL <span class="token punctuation">(</span>for example, https://gitlab.com/<span class="token punctuation">)</span>:
+http://192.168.50.128/
+Enter the registration token:
+iqxKz5XTz4w_2RxiSQ5S
+Enter a description <span class="token keyword">for</span> the runner:
+<span class="token punctuation">[</span>24dc60abee0b<span class="token punctuation">]</span>: node1.ayunw.cn
+Enter tags <span class="token keyword">for</span> the runner <span class="token punctuation">(</span>comma-separated<span class="token punctuation">)</span>:
+default
+Registering runner<span class="token punctuation">..</span>. succeeded                     runner<span class="token operator">=</span>iqxKz5XT
+Enter an executor: docker-ssh+machine, kubernetes, custom, shell, ssh, virtualbox, docker, docker-ssh, parallels, docker+machine:
+docker
+Enter the default Docker image <span class="token punctuation">(</span>for example, ruby:2.6<span class="token punctuation">)</span>:
+docker:19.03.15
+Runner registered successfully. Feel <span class="token function">free</span> to start it, but <span class="token keyword">if</span> it's running already the config should be automatically reloaded<span class="token operator">!</span> 
+
+root@24dc60abee0b:/<span class="token comment" spellcheck="true"># gitlab-runner restart</span>
+Runtime platform                                    arch<span class="token operator">=</span>amd64 os<span class="token operator">=</span>linux pid<span class="token operator">=</span>98 revision<span class="token operator">=</span>775dd39d version<span class="token operator">=</span>13.8.0
+Terminated
+
+root@24dc60abee0b:/<span class="token comment" spellcheck="true"># gitlab-runner list </span>
+Runtime platform                                    arch<span class="token operator">=</span>amd64 os<span class="token operator">=</span>linux pid<span class="token operator">=</span>130 revision<span class="token operator">=</span>775dd39d version<span class="token operator">=</span>13.8.0
+Listing configured runners                          ConfigFile<span class="token operator">=</span>/etc/gitlab-runner/config.toml
+node1.ayunw.cn                                      Executor<span class="token operator">=</span>docker Token<span class="token operator">=</span>VSVWeipeMirJsJo9znT5 URL<span class="token operator">=</span>http://192.168.50.128/
+</code></pre>
+<p>runner注册完成后会在 &#x2F;etc&#x2F;gitlab-runner目录下生成一个config.toml的文件。这个就是runner的配置文件。因为在安装runner的时候我们已经将配置文件的目录通过挂载的形式映射到了宿主机目录：&#x2F;mydata&#x2F;gitlab-runner&#x2F;config 下，所以后续如果需要更新runner配置文件可以直接在宿主机上进行修改。并且在宿主机上进行修改runner配置文件不需要重启runner。它会每5分钟检查一次文件自动获取所有更改。包括该[[runners]]部分中定义的任何参数以及全局部分中的大多数参数（除外）listen_address。</p>
+<p>配置如下：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@iZ8vb3whi21216kyd2fm2ywxgcZ ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># cat /mydata/gitlab-runner/config/config.toml</span>
+concurrent <span class="token operator">=</span> 1
+check_interval <span class="token operator">=</span> 0
+
+<span class="token punctuation">[</span>session_server<span class="token punctuation">]</span>
+  session_timeout <span class="token operator">=</span> 1800
+
+<span class="token punctuation">[</span><span class="token punctuation">[</span>runners<span class="token punctuation">]</span><span class="token punctuation">]</span>
+  name <span class="token operator">=</span> <span class="token string">"springcloud cicd test"</span>
+  url <span class="token operator">=</span> <span class="token string">"http://192.121.121.2:8088"</span>
+  token <span class="token operator">=</span> <span class="token string">"H16qeFminuGeLZAed6ZE"</span>
+  executor <span class="token operator">=</span> <span class="token string">"docker"</span>
+  <span class="token punctuation">[</span>runners.custom_build_dir<span class="token punctuation">]</span>
+  <span class="token punctuation">[</span>runners.cache<span class="token punctuation">]</span>
+    <span class="token punctuation">[</span>runners.cache.s3<span class="token punctuation">]</span>
+    <span class="token punctuation">[</span>runners.cache.gcs<span class="token punctuation">]</span>
+    <span class="token punctuation">[</span>runners.cache.azure<span class="token punctuation">]</span>
+  <span class="token punctuation">[</span>runners.docker<span class="token punctuation">]</span>
+    tls_verify <span class="token operator">=</span> <span class="token boolean">false</span>
+    image <span class="token operator">=</span> <span class="token string">"docker:20.10.15"</span>
+    privileged <span class="token operator">=</span> <span class="token boolean">false</span>
+    disable_entrypoint_overwrite <span class="token operator">=</span> <span class="token boolean">false</span>
+    oom_kill_disable <span class="token operator">=</span> <span class="token boolean">false</span>
+    disable_cache <span class="token operator">=</span> <span class="token boolean">false</span>
+    volumes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"/var/run/docker.sock:/var/run/docker.sock"</span>, <span class="token string">"/cache"</span>,<span class="token string">"/mydata/sc     s/.m2:/mydata/scs/.m2"</span>,<span class="token string">"/mydata/scs/project/:/mydata/scs/project/"</span><span class="token punctuation">]</span>
+    pull_policy <span class="token operator">=</span> <span class="token string">"if-not-present"</span>
+    shm_size <span class="token operator">=</span> 0
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/20220627190417.png"></p>
+</blockquote>
+<p>我这里的volumes填的第一个是因为我要在容器里使用docker命令，这涉及到docker in docker问题；root&#x2F;.m2很好理解，因为我在runner里使用maven镜像进行打包操作（见一会的.gitlab-ci.yml文件），将各个jar包存在宿主机的&#x2F;mydata&#x2F;scs&#x2F;.m2目录下，避免一直下jar包减少job所耗时间，&#x2F;mydata&#x2F;scs&#x2F;project&#x2F;将maven打包的jar存储在宿主机的&#x2F;mydata&#x2F;scs&#x2F;project&#x2F;目录下。</p>
+<p>pull_policy &#x3D; “if-not-present”#这是避免runner重新拉取镜像，直接从本地拉</p>
+<p>注册完成后，返回gitlab的ui查看注册的runner。</p>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/20220627190743.png"></p>
+</blockquote>
+<h3 id="六、配置-gitlab-ci-yml和Dockerfile"><a href="#六、配置-gitlab-ci-yml和Dockerfile" class="headerlink" title="六、配置.gitlab-ci.yml和Dockerfile"></a>六、配置.gitlab-ci.yml和Dockerfile</h3><p>项目结构如下：</p>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/20220627191618.png"></p>
+</blockquote>
+<p><strong>1.gitlab-ci.yml</strong></p>
+<pre class=" language-bash"><code class="language-bash">variables: <span class="token comment" spellcheck="true">#变量</span>
+  AUTH_CONTAINER:  <span class="token string">"scs-auth"</span>
+  AUTH_IMAGE:  <span class="token string">"scs-auth"</span>
+  AUTH_PORT:  9200
+  GATEWAY_CONTAINER: <span class="token string">"scs-gateway"</span>
+  GATEWAY_IMAGE: <span class="token string">"scs-gateway"</span>
+  GATEWAY_PORT: 8080
+  SYSTEM_CONTAINER:  <span class="token string">"scs-system"</span>
+  SYSTEM_IMAGE:  <span class="token string">"scs-system"</span>
+  SYSTEM_PORT: 9201
+  CMS_CONTAINER:  <span class="token string">"scs-cms"</span>
+  CMS_IMAGE:  <span class="token string">"scs-cms"</span>
+  CMS_PORT: 9301
+  FILE_CONTAINER:  <span class="token string">"scs-file"</span>
+  FILE_IMAGE:  <span class="token string">"scs-file"</span>
+  FILE_PORT: 9300
+  MAVEN_OPTS: <span class="token string">"-Djava.awt.headless=true -Dmaven.repo.local=/mydata/scs/.m2"</span>  <span class="token comment" spellcheck="true">#指定maven的存储目录</span>
+
+cache:
+  paths:
+    - /mydata/scs/.m2
+
+stages:
+  - build
+  - deploy
+
+build:jdk8:
+  stage: build
+  script:
+    - <span class="token keyword">echo</span> <span class="token string">"=============== 开始编译打包任务 ==============="</span>
+    - mvn clean package -Dmaven.test.skip<span class="token operator">=</span>true
+    - <span class="token function">mkdir</span> -p /mydata/scs/project/auth
+    - <span class="token function">mkdir</span> -p /mydata/scs/project/gateway
+    - <span class="token function">mkdir</span> -p /mydata/scs/project/system
+    - <span class="token function">mkdir</span> -p /mydata/scs/project/cms
+    - <span class="token function">mkdir</span> -p /mydata/scs/project/file
+    - <span class="token function">cp</span> -r scs-auth/target/scs-auth.jar  Dockerfile /mydata/scs/project/auth/
+    - <span class="token function">cp</span> -r scs-gateway/target/scs-gateway.jar  Dockerfile /mydata/scs/project/gateway/
+    - <span class="token function">cp</span> -r scs-modules/scs-cms/target/scs-modules-cms.jar  Dockerfile /mydata/scs/project/cms/
+    - <span class="token function">cp</span> -r scs-modules/scs-file/target/scs-modules-file.jar  Dockerfile /mydata/scs/project/file/
+    - <span class="token function">cp</span> -r scs-modules/scs-system/target/scs-modules-system.jar  Dockerfile /mydata/scs/project/system/
+  artifacts:
+    paths:
+      - build/
+  only:
+    - master <span class="token comment" spellcheck="true">#当有代码合到主干时触发这个job</span>
+  tags:
+    - default
+  image: maven:3.3.9-jdk-8
+
+
+deploy:jdk8:
+  stage: deploy
+  image: docker:20.10.15  <span class="token comment" spellcheck="true">#目的是为了在docker环境下的runner能执行docker命令</span>
+  script:
+    - docker <span class="token function">ps</span> -a<span class="token operator">|</span><span class="token function">grep</span> <span class="token variable">$AUTH_CONTAINER</span> <span class="token operator">&amp;&amp;</span>  docker stop <span class="token variable">$AUTH_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker <span class="token function">rm</span> <span class="token variable">$AUTH_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span> <span class="token string">"not exist"</span>
+    - docker <span class="token function">ps</span> -a<span class="token operator">|</span><span class="token function">grep</span> <span class="token variable">$GATEWAY_CONTAINER</span> <span class="token operator">&amp;&amp;</span>  docker stop <span class="token variable">$GATEWAY_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker <span class="token function">rm</span> <span class="token variable">$GATEWAY_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span> <span class="token string">"not exist"</span>
+    - docker <span class="token function">ps</span> -a<span class="token operator">|</span><span class="token function">grep</span> <span class="token variable">$SYSTEM_CONTAINER</span> <span class="token operator">&amp;&amp;</span>  docker stop <span class="token variable">$SYSTEM_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker <span class="token function">rm</span> <span class="token variable">$SYSTEM_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span> <span class="token string">"not exist"</span>
+    - docker <span class="token function">ps</span> -a<span class="token operator">|</span><span class="token function">grep</span> <span class="token variable">$CMS_CONTAINER</span> <span class="token operator">&amp;&amp;</span>  docker stop <span class="token variable">$CMS_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker <span class="token function">rm</span> <span class="token variable">$CMS_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span> <span class="token string">"not exist"</span>
+    - docker <span class="token function">ps</span> -a<span class="token operator">|</span><span class="token function">grep</span> <span class="token variable">$FILE_CONTAINER</span> <span class="token operator">&amp;&amp;</span>  docker stop <span class="token variable">$FILE_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker <span class="token function">rm</span> <span class="token variable">$FILE_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span> <span class="token string">"not exist"</span>
+    - docker images <span class="token operator">|</span><span class="token function">grep</span>  <span class="token variable">$AUTH_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker rmi -f <span class="token variable">$AUTH_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span>  <span class="token string">"not exist"</span>
+    - docker images <span class="token operator">|</span><span class="token function">grep</span>  <span class="token variable">$GATEWAY_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker rmi -f <span class="token variable">$GATEWAY_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span>  <span class="token string">"not exist"</span>
+    - docker images <span class="token operator">|</span><span class="token function">grep</span>  <span class="token variable">$SYSTEM_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker rmi -f <span class="token variable">$SYSTEM_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span>  <span class="token string">"not exist"</span>
+    - docker images <span class="token operator">|</span><span class="token function">grep</span>  <span class="token variable">$CMS_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker rmi -f <span class="token variable">$CMS_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span>  <span class="token string">"not exist"</span>
+    - docker images <span class="token operator">|</span><span class="token function">grep</span>  <span class="token variable">$FILE_CONTAINER</span> <span class="token operator">&amp;&amp;</span> docker rmi -f <span class="token variable">$FILE_CONTAINER</span> <span class="token operator">||</span> <span class="token keyword">echo</span>  <span class="token string">"not exist"</span>
+    - docker build --build-arg JAR_FILE<span class="token operator">=</span>scs-auth.jar -t <span class="token variable">$AUTH_CONTAINER</span>  /mydata/scs/project/auth
+    - docker build --build-arg JAR_FILE<span class="token operator">=</span>scs-gateway.jar -t <span class="token variable">$GATEWAY_CONTAINER</span>  /mydata/scs/project/gateway
+    - docker build --build-arg JAR_FILE<span class="token operator">=</span>scs-modules-system.jar -t <span class="token variable">$SYSTEM_CONTAINER</span>  /mydata/scs/project/system
+    - docker build --build-arg JAR_FILE<span class="token operator">=</span>scs-modules-cms.jar -t <span class="token variable">$CMS_CONTAINER</span>  /mydata/scs/project/cms
+    - docker build --build-arg JAR_FILE<span class="token operator">=</span>scs-modules-file.jar -t <span class="token variable">$FILE_CONTAINER</span>  /mydata/scs/project/file
+    - docker run -it -d --name <span class="token variable">$AUTH_CONTAINER</span> -p <span class="token variable">$AUTH_PORT</span><span class="token keyword">:</span><span class="token variable">$AUTH_PORT</span> <span class="token variable">$AUTH_IMAGE</span>
+    - docker run -it -d --name <span class="token variable">$GATEWAY_CONTAINER</span> -p <span class="token variable">$GATEWAY_PORT</span><span class="token keyword">:</span><span class="token variable">$GATEWAY_PORT</span> <span class="token variable">$GATEWAY_IMAGE</span>
+    - docker run -it -d --name <span class="token variable">$SYSTEM_CONTAINER</span> -p <span class="token variable">$SYSTEM_PORT</span><span class="token keyword">:</span><span class="token variable">$SYSTEM_PORT</span> <span class="token variable">$SYSTEM_IMAGE</span>
+    - docker run -it -d --name <span class="token variable">$CMS_CONTAINER</span> -p <span class="token variable">$CMS_PORT</span><span class="token keyword">:</span><span class="token variable">$CMS_PORT</span> <span class="token variable">$CMS_IMAGE</span>
+    - docker run -it -d --name <span class="token variable">$FILE_CONTAINER</span> -p <span class="token variable">$FILE_PORT</span><span class="token keyword">:</span><span class="token variable">$FILE_PORT</span> <span class="token variable">$FILE_IMAGE</span>
+  only:
+    - master
+  tags:
+    - default
+</code></pre>
+<p><strong>2.Dockerfile</strong></p>
+<pre class=" language-bash"><code class="language-bash">FROM primetoninc/jdk:1.8
+ARG JAR_FILE
+MAINTAINER   example@qq.com
+COPY $<span class="token operator">&amp;</span><span class="token comment" spellcheck="true">#123;JAR_FILE&amp;#125; app.jar</span>
+ENTRYPOINT <span class="token punctuation">[</span><span class="token string">"java"</span>,<span class="token string">"-Djava.security.egd=file:/dev/./urandom"</span>,<span class="token string">"-jar"</span>,<span class="token string">"/app.jar"</span><span class="token punctuation">]</span>
+</code></pre>
+<p><font style="color:red; font:bold">注意：在gitlab中需要分配项目到指定的runner下才能执行cicd功能，并勾选图中的两项，如下图所示：</font></p>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/2022-06-28_162039.png"></p>
+</blockquote>
+<p><font style="color:red; font:bold">在新建项目时，时常会忘记去给新建的项目分配指定的runner，所以导致新建项目无法执行cicd功能，会出现这样的提示：</font></p>
+<pre class=" language-tex"><code class="language-tex">此作业已阻塞,因为您未分配任何具备这些标签的可用Runner: default
+如下图所示：
+</code></pre>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/20230801141902.jpg"></p>
+</blockquote>
+<p><strong>3.结果：</strong><br>最后的结果是我在docker上运行了七个容器，gitlab和gitlab-runner是常驻的，每当项目更新到主干的时候，会将docker里的 web容器stop跟rm，然后重新制作镜像并运行</p>
+<blockquote>
+<p><img src="/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/20220627191940.png"></p>
+</blockquote>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Beck Liang</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://beckliang.github.io/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/">https://beckliang.github.io/2022/06/27/%E4%BD%BF%E7%94%A8gitlab%E6%8F%90%E4%BE%9B%E7%9A%84CICD%E5%8A%9F%E8%83%BD%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%EF%BC%88SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%89/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Beck Liang</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/centos/">
+                                    <span class="chip bg-color">centos</span>
+                                </a>
+                            
+                                <a href="/tags/docker/">
+                                    <span class="chip bg-color">docker</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/08/11/Docker%E5%AE%89%E8%A3%85%E7%A6%85%E9%81%93%E5%B9%B6%E9%85%8D%E7%BD%AEsmtp%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5/">
+                    <div class="card-image">
+                        
+                        <img src="/images/zentao.png" class="responsive-img" alt="Docker安装禅道并配置smtp邮件通知">
+                        
+                        <span class="card-title">Docker安装禅道并配置smtp邮件通知</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            禅道开源项目管理软件是一款国产的开源项目管理软件。它集产品管理、项目管理、质量管理、文档管理、 组织管理和事务管理于一体，是一款专业的研发项目管理软件，完整地覆盖了项目管理的核心流程。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-08-11
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/docker/" class="post-category">
+                                    docker
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%A6%85%E9%81%93/">
+                        <span class="chip bg-color">禅道</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/06/10/%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Centos7%E4%B8%8A%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                    <div class="card-image">
+                        
+                        <img src="/images/gitlab.png" class="responsive-img" alt="使用Docker在Centos7上搭建gitlab服务器">
+                        
+                        <span class="card-title">使用Docker在Centos7上搭建gitlab服务器</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            GitLab 是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的Web服务。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/gitlab/" class="post-category">
+                                    gitlab
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/centos/">
+                        <span class="chip bg-color">centos</span>
+                    </a>
+                    
+                    <a href="/tags/docker/">
+                        <span class="chip bg-color">docker</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2025</span>
+            
+            <a href="/about" target="_blank">Beck Liang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
